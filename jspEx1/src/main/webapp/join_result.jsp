@@ -13,7 +13,14 @@
 	String pwd = request.getParameter("pwd");
 	String name = request.getParameter("name");
 	String gender = request.getParameter("gender");
+	
+	String[] hobby = request.getParameterValues("hobby");
+	for(String h : hobby){
+		out.println(h + "<br>");
+	}
+	
 	%>
 	<% out.println(uid + "님 환영합니다.");%>
+	
 </body>
 </html>
