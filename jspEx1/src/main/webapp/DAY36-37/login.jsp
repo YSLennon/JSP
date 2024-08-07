@@ -7,6 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<%
+	/* session.removeAttribute("userId"); */
+	session.invalidate();
+	%>
 	<form action="login-result.jsp" method='get'>
 		<div>
 			<label>아이디: <input type='text' name='uid'></label>

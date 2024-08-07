@@ -26,12 +26,14 @@
 	<%
 		ResultSet rs = null;
 		Statement stmt = null;
-		String boardNo = request.getParameter("boardNo");
+		String userId = request.getParameter("userId");
+		
 		try{
 			stmt = conn.createStatement();
-			String querytext = "SELECT * FROM TBL_BOARD";
-			rs = stmt.executeQuery(querytext);
+			String querytext = "update tbl_user set cnt = 0 where userId = '"+userId+"'";
+			stmt.executeUpdate(querytext);
 			
+		
 		} catch(SQLException ex) {
 			out.println("SQLException : " + ex.getMessage());
 		}
@@ -39,3 +41,9 @@
 
 </body>
 </html>
+
+<script>
+	alert("초기화되었습니다.");
+	window.close();
+	window.opener.fnReload();
+</script>
