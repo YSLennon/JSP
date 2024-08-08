@@ -34,7 +34,7 @@
 	
 	try{
 		stmt = conn.createStatement();
-		String querytext = "SELECT * ,IFNULL(C.CNT,'') AS CCNT FROM TBL_BOARD B INNER JOIN TBL_USER U ON B.USERID = U.USERID"
+		String querytext = "SELECT * IFNULL(C.CNT,'') AS CCNT FROM TBL_BOARD B INNER JOIN TBL_USER U ON B.USERID = U.USERID"
 				+" left JOIN ( SELECT COUNT(*) AS CNT, boardNo FROM TBL_COMMENT GROUP BY BOARDNO) C ON B.boardNo = C.boardNo";
 		rs = stmt.executeQuery(querytext);
 		System.out.println(querytext);
