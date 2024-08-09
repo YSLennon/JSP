@@ -53,7 +53,7 @@
                 <td>
                     <a href="#" onclick="fnView('${row.boardNo}')">
                         <%-- ${row.title} <c:if test="${row.commentCnt != null}">(${row.commentCnt})</c:if> --%>
-                        ${row.title} <c:if test="${not empty row.commentCnt null}">(${row.commentCnt})</c:if> <!-- not empty를 써도 동일하다 -->
+                        ${row.title} <c:if test="${not empty row.commentCnt}">(${row.commentCnt})</c:if> <!-- not empty를 써도 동일하다 -->
                     </a>
                 </td>
                 <td>${row.NAME}</td>

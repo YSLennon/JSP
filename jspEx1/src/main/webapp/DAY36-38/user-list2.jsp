@@ -27,14 +27,14 @@ table, th, tr, td {
 	<div>
 		<button onclick="location.href = 'boardList2.jsp'">게시글보기</button>
 		<button onclick="location.href='login.jsp'">로그아웃</button>
-
+	
 	</div>
 	<br>
 	<%@ include file="db2.jsp"%>
 	<sql:query var="result" dataSource="${dataSource}">
         SELECT * FROM TBL_USER
     </sql:query>
-
+	
 	<table>
 		<tr>
 			<th>아이디</th>
@@ -48,7 +48,7 @@ table, th, tr, td {
 				<td>${row.name}</td>
 				<td><c:if test='${row.status.equals("A")}'>관리자</c:if> <c:if
 						test='${row.status.equals("C")}'>일반회원</c:if></td>
-				<td><c:if test="${row.cnt >= 5}">
+				<td><c:if test="${row.cnt >= 5}"> + ${row.cnt}
 						<button onclick="resetPW('${row.userId}')">초기화</button>
 					</c:if> <c:if test="${row.cnt < 5}">
 					</c:if></td>

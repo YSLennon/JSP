@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 	<%!
 		int i = 0;
 		String name = "고길동";
@@ -19,6 +20,8 @@
 			out.println("<h2>" + i + "</h2>");
 		}
 	%>
+	<jsp:include page ="header.jsp"></jsp:include>
+	
 	<h1><%=
 		name
 	%></h1>
