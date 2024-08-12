@@ -28,6 +28,7 @@
 		function fnJoin(){
 			/* document.'formTagName'을 입력해서 접근할 수 있다. */
 			var form = document.login; 
+			console.log(document.uid);
 			if(form.uid.value === ""|| form.uid.value.length == undefined){
 				alert('ID를 입력해주세요')
 				form.uid.focus();
