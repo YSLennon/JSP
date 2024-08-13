@@ -18,4 +18,4 @@ CREATE TABLE Region (tbl_usertbl_usertbl_user
     pRegionNo INT NULL,
     depth INT NOT NULL,
     FOREIGN KEY (pRegionNo) REFERENCES Region(regionNo)
-);stridecyclestridecycleregion
+);
