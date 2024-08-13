@@ -1,0 +1,50 @@
+
+/* Color */
+/*
+.mainColor {}
+
+.primaryColor {}
+
+.secondaryColor {}
+
+.reverseColor {}
+
+.darkMainColor {
+    background-color: #3C3F41;
+    color: #eee;
+}
+
+.darkPrimaryColor {
+    background-color: #4F6778;
+    color: #eee;
+}
+
+.darkSecondaryColor {
+    background-color: #5D7A8A;
+    color: #eee;
+}
+
+.darkReverseColor {
+    background-color: #4B4E52;
+    color: #eee;
+}
+
+.lightMainColor {
+    background-color: #EEE0C9;
+    color: #000000;
+}
+
+.lightPrimaryColor {
+    background-color: #96B6C5;
+    color: #000000;
+}
+
+.lightSecondaryColor {
+    background-color: #ADC4CE;
+    color: #000000;
+}
+
+.lightReverseColor {
+    background-color: #F1F0E8;
+    color: #000000;
+}

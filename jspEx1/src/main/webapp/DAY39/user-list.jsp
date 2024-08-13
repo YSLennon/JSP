@@ -27,7 +27,6 @@ table, th, tr, td {
 					<tr>
 						<td>${user.userId}</td>
 						<td>${user.name}</td>
-						<td>${user.status}</td>
 					</tr>
 				</c:forEach>
 			</table>
