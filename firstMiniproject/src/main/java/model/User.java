@@ -32,6 +32,7 @@ public class User {
 		this.cdatetime = cdatetime;
 		this.udatetime = udatetime;
 	}
+	// insertUser
 	public User(String uid, String pwd, String name, String phone, String addr, String nickName, String favor) {
 		this.uid = uid;
 		this.pwd = pwd;

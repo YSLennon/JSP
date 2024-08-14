@@ -11,7 +11,7 @@
 <body>
     <aside id="sideBar">
         <div id="profile">
-            <span id="name">ì ì±</span>ë ìëíì¸ì
+            <span id="name">유성</span>님 안녕하세요
             <div id="statusZone">
                 following followers activityCount
             </div>

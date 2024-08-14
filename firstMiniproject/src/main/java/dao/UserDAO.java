@@ -1,41 +1,15 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-
 import model.User;
 
-public class UserDAO {
-	private String jdbcURL = "jdbc:mysql://localhost:3306/stridecycle?&useSSL=false";
-//	private String jdbcURL = "jdbc:mysql://localhost:3306/stridecycle?&useSSL=false";
-    private String jdbcUsername = "root";
-    private String jdbcPassword = "test1234";
-    private Connection jdbcConnection;
-
-    protected void connect() throws SQLException {
-        if (jdbcConnection == null || jdbcConnection.isClosed()) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-            } catch (ClassNotFoundException e) {
-            	System.out.println("DB 연결 실패");
-            	throw new SQLException(e);
-            }
-            jdbcConnection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-        }
-    }
-
-    protected void disconnect() throws SQLException {
-        if (jdbcConnection != null && !jdbcConnection.isClosed()) {
-            jdbcConnection.close();
-        }
-    }
+public class UserDAO extends MainDAO{
 
     public List<User> listAllUsers() throws SQLException {
         List<User> userList = new ArrayList<>();
@@ -69,20 +43,28 @@ public class UserDAO {
         return userList;
     }
     
-    public void insertUser(String sql) throws SQLException {
+    public void insertUser(User user) throws SQLException {
+    	
+    	String sql = "insert into tbl_user (uid, pwd, name, phone, addr, nickName, favor) values (?, ?, ?, ?, ?, ?, ?)";
     	
     	connect();
-    	
-    	Statement statement = jdbcConnection.createStatement();
-    	statement.executeUpdate(sql);
-
-        statement.close();
-        
+    	try(PreparedStatement statement = jdbcConnection.prepareStatement(sql)){
+        	statement.executeUpdate(sql);
+        	statement.setString(1, user.getUid());
+        	statement.setString(2, user.getPwd());
+        	statement.setString(3, user.getName());
+        	statement.setString(4, user.getPhone());
+        	statement.setString(5, user.getAddr());
+        	statement.setString(6, user.getNickName());
+        	statement.setString(7, user.getFavor());
+        	
+        	statement.executeUpdate();
+    	};
     	disconnect();
     	
     }
     
-    public boolean checkUid(String sql) throws SQLException{
+    public boolean isExist(String sql) throws SQLException{
 
     	connect();
     	
