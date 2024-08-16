@@ -69,20 +69,21 @@
 <body>
     <div class="container">
         <div class="modal-btn-box">
-            <button type="button" id="modal-open">ëª¨ë¬ì°½ ì´ê¸°</button>
+            <button type="button" id="modal-open">모달창 열기</button>
         </div>
+        
         <div class="popup-wrap" id="popup">
             <div class="popup">
                 <div class="body-contentbox">
-                    <p>ìë ¥íì¤ ì íì ì´ë¦ì ìë ¥íì¸ì</p><br>
-                    <input type="text" placeholder="ê²ìì´ ìë ¥"
+                    <p>입력하실 제품의 이름을 입력하세요</p><br>
+                    <input type="text" placeholder="검색어 입력"
                         style="font-size: 15px; width: 180px; height:30px; margin-right: 5px;"> <br>
-                    <p>ë³¸ì¸ìê² í´ë¹ ì íì ì í©ì¬ë¶ë¥¼ ìë ¥íì¸ì</p>
+                    <p>본인에게 해당 제품의 적합여부를 입력하세요</p>
                 </div>
             </div>
             <div class="popup-foot">
-                <span class="pop-btn confirm" id="confirm">ì í©</span>
-                <span class="pop-btn close" id="close">ë¶ì í©</span>
+                <span class="pop-btn confirm" id="confirm">적합</span>
+                <span class="pop-btn close" id="close">부적합</span>
             </div>
         </div>
     </div>
@@ -92,32 +93,32 @@
 </html>
 <script>
      function disableScroll() {
-    // body ììì overflowë¥¼ hiddenì¼ë¡ ë³ê²½íì¬ ì¤í¬ë¡¤ ë¹íì±í
+    // body 요소의 overflow를 hidden으로 변경하여 스크롤 비활성화
     document.body.style.overflow = 'hidden';
     }
 
     function enableScroll() {
-    // body ììì overflowë¥¼ ë¤ì visibleë¡ ë³ê²½íì¬ ì¤í¬ë¡¤ íì±í
+    // body 요소의 overflow를 다시 visible로 변경하여 스크롤 활성화
     document.body.style.overflow = 'visible';
     }
     $(function(){
       $("#confirm").click(function(){
-          //ëª¨ë¬ ë«ê¸° í¨ì í¸ì¶
+          //모달 닫기 함수 호출
           modalClose();
           enableScroll();
-          //ì»¨í ì´ë²¤í¸ ì²ë¦¬
+          //컨펌 이벤트 처리
       });
       $("#modal-open").click(function(){        
           $("#popup").css('display','flex').hide().fadeIn();
           disableScroll();
-          //íìì flexìì±ì¼ë¡ ë°ê¿ì¤ í hide()ë¡ ì¨ê¸°ê³  ë¤ì fadeIn()ì¼ë¡ í¨ê³¼
+          //팝업을 flex속성으로 바꿔준 후 hide()로 숨기고 다시 fadeIn()으로 효과
       });
       $("#close").click(function(){
-          modalClose(); //ëª¨ë¬ ë«ê¸° í¨ì í¸ì¶
+          modalClose(); //모달 닫기 함수 호출
           enableScroll();
       });
       function modalClose(){
-          $("#popup").fadeOut(); //íì´ëìì í¨ê³¼
+          $("#popup").fadeOut(); //페이드아웃 효과
       }
     });
 </script>

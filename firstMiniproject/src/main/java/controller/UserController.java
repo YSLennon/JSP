@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.AsyncContext;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +47,7 @@ public class UserController extends HttpServlet {
 					PrintWriter out = response.getWriter();
 					out.print("{\"isAvailable\": " + userDAO.isExist(sql) + "}");
 					out.flush();
+					
 				} else if (act.equals("checkNick")) { 
 					// confirm Nickname
 
@@ -55,19 +57,54 @@ public class UserController extends HttpServlet {
 					PrintWriter out = response.getWriter();
 					out.print("{\"isAvailable\": " + userDAO.isExist(sql) + "}");
 					out.flush();
+					
 				} else if (act.equals("join")) { 
 					// join 
 					String jsonData = request.getParameter("jsonData");
 					Gson gson = new Gson();
 					User user = gson.fromJson(jsonData, User.class);
 					userDAO.insertUser(user);
-					
+					user = new User(user.getUid(), user.getFavor(), user.getAuthority(), user.getUdatetime());
 					HttpSession session = request.getSession();
-					session.setAttribute("uid", user.getUid());
-					session.setAttribute("favor", user.getFavor());
-					session.setAttribute("authority", user.getAuthority());
-					session.setAttribute("udatetime", user.getUdatetime());
+					session.setAttribute("userSession", user);
 					
+					response.sendRedirect("first_mini_project/intro.jsp");
+					
+				} else if (act.equals("login")) { 
+					// login
+					String uid = str(request.getParameter("uid"));
+					String pwd = str(request.getParameter("pwd"));
+					int cnt = userDAO.checkCNT(uid);
+					if(cnt > 5) {
+						//로그인 시도 횟수 5회 초과
+					} else if(cnt == -1) {
+						//존재하지 않는 아이디
+					} else {
+						//아이디 확인 비밀번호 체크 후 로그인 및 cnt 초기화
+						User user = userDAO.login(uid,pwd);
+						if(user == null) {
+							userDAO.addCNT(uid);
+							//TODO 로그인 비밀번호 확인해주세요 메세지
+							
+						}
+						//CNT 초기화 및 세션정보 저장
+						userDAO.initCNT(uid);
+						
+						user = new User(user.getUid(), user.getFavor(), user.getAuthority(), user.getUdatetime());
+						HttpSession session = request.getSession();
+						
+						session.setAttribute("userSession", user);
+
+						RequestDispatcher dispatcher = request.getRequestDispatcher("first_mini_project/intro.jsp");
+						dispatcher.forward(request, response);							
+					}
+					
+					
+					
+				} else if (act.equals("logout")) {
+					HttpSession session = request.getSession();
+					session.invalidate();
+					response.sendRedirect("first_mini_project/intro.jsp");
 					
 				}
 

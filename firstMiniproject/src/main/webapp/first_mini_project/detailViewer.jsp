@@ -11,25 +11,25 @@
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-
+	
+<div class="container closeMod">
     <section id="detVwContainer">
-        <div id="titleBlock">
-            <div id="listTitle">Title</div>
-            <div id="boardInfo">
+        <div id="titleBlock">Title
+        </div>
+        <div id="boardInfo">
                 <div id="organizer" style="margin-left: 150px;">organizer</div>
                 <div id="cdatetime">2024.05.06 13:00 작성일자</div>
             </div>
-
-        </div>
+        
         <div class="mainBlock">
             <div id="map">
 
             </div>
 
             <div id="tagZone">
-                <div class="tagBlock">Ride</div>
-                <div class="tagBlock">NowMember</div>
-                <div class="tagBlock">2024.05.06 13:00 </div>
+                <div class="detTagBlock">Ride</div>
+                <div class="detTagBlock">NowMember</div>
+                <div class="detTagBlock">2024.05.06 13:00 </div>
             </div>
 
             <div id="contentsBlock">
@@ -37,7 +37,9 @@
             </div>
 
         </div>
+       
     </section>
+    </div>
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 

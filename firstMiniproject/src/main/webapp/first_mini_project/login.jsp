@@ -16,13 +16,13 @@
         <input class="loginInput" type="text" name="uid" placeholder="id">
         <input class="loginInput" type="password" name="pwd" placeholder="password">
         <div id="findAccount">
-            <a class="find" href="javascript:;" id="findPwd">비밀번호 찾기 </a>
-            <span class="find"> | </span>
-            <a class="find" href="javascript:;" id="findUid"> 아이디 찾기</a>
+            <a class="find skyblue" href="javascript:;" id="findPwd">비밀번호 찾기 </a>
+            <span class="find skyblue"> | </span>
+            <a class="find skyblue" href="javascript:;" id="findUid"> 아이디 찾기</a>
         </div>
         <button id="loginSignInBtn">로그인</button>
         <div id="joinZone">
-            계정이 없으신가요? <a href="javascript:;" > 회원가입</a>
+            계정이 없으신가요? <a class="skyblue" href="javascript:;" > 회원가입</a>
         </div>
 
     </div>

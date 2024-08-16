@@ -11,8 +11,8 @@
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-	<div class="body">
-		<div class="container">
+	
+		<div class="container closeMod">
 
 			<jsp:include page="sideBar.jsp"></jsp:include>
 			<div class="clientInfoContainer">
@@ -43,7 +43,7 @@
 
 			</div>
 		</div>
-	</div>
+	
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

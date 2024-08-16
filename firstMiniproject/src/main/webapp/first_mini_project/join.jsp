@@ -7,14 +7,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
 <!-- 미디어로 사이즈 조절해두기! 데스크탑만 제한하면 될듯? -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/first_mini_project/src/layout/layout.css">
-<script
-	src="${pageContext.request.contextPath}/first_mini_project/src/js/jquery-3.7.1.min.js?ts=<%=System.currentTimeMillis()%>"></script>
 
 </head>
 <body>
+
 	<jsp:include page="header.jsp"></jsp:include>
+	<div class="container closeMod">
 	<section class="joinContainer">
 		<div id="joinTitle">StrideCycle 회원가입</div>
 		<form action="../user" name="formId" method="post">
@@ -38,10 +36,9 @@
 				placeholder="phone">
 			</label> <span class="inputName">즐기는 운동</span> <label class="joinLine">
 				<div class="inputBlock relatived">
-					<label class="favor"><input type="radio" name="favor"
-						checked> 전부</label> <label class="favor"><input
-						type="radio" name="favor"> 달리기</label> <label class="favor"><input
-						type="radio" name="favor"> 자전거</label>
+					<label class="favor"><input type="radio" name="favor" value = "A" checked> 전부</label>
+					 <label class="favor"><input type="radio" name="favor" value = "R"> 달리기</label> 
+						<label class="favor"><input type="radio" name="favor" value = "C"> 자전거</label>
 				</div>
 			</label> <span class="inputName">주소 </span> <span class="joinLine">
 				<div class="addrBlock relatived">
@@ -60,6 +57,7 @@
 
 		</form>
 	</section>
+	</div>
 	<jsp:include page="footer.jsp"></jsp:include>
 	<script>
 		var form = document.formId
@@ -81,6 +79,7 @@
 			$.ajax({
 				url : "${pageContext.request.contextPath}/user",
 				type : "POST",
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				dataType : "json",
 				data : {
 					uid : uid,
@@ -109,6 +108,7 @@
 			$.ajax({
 				url : "${pageContext.request.contextPath}/user",
 				type : "POST",
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				dataType : "json",
 				data : {
 					nickName : nickName,
@@ -201,7 +201,7 @@
 					favor : form.favor.value,
 					act : "join"
 				};
-/* 
+
 			// 빈칸 검색
 			var isEmpty = Object.values(userData).some((udata)=>{
 				if (udata.value === ''){
@@ -242,12 +242,16 @@
 				return;
 			} 
 			Object.values(userData)
-			 */
+			 
+			if(userData.addr.value === "읍/면/동"){
+				alert("주소를 지정해주세요.");
+				return;
+			}
 			// JSON 형태로 서버에 전송
 			 $.ajax({
 				url : "${pageContext.request.contextPath}/user",
 				type : "POST",
-				contentType : "application/x-www-form-urlencoded",
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				data : {
 					jsonData : JSON.stringify(requestData),
 					act : "join"
@@ -255,7 +259,8 @@
 				success : function(response) {
 					alert("회원가입이 완료되었습니다.");
 
-					form.action = "${pageContext.request.contextPath}/first_mini_project/listView.jsp";
+					form.action = "${pageContext.request.contextPath}/page?act=main";
+					form.method = "get";
 					form.submit(); 
 				},
 				error : function(xhr, status, error) {

@@ -14,7 +14,7 @@
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 
-	<section id="listContainer">
+	<section id="listContainer closeMod">
 		<div class="listBlock">
 			<a class="listTitle" href="javascript:;">Title</a>
 			<div class="listDatetime">2024.05.06 13:00 모임 날짜</div>
@@ -72,7 +72,7 @@
 				<option>몰루</option>
 				<option>몰러</option>
 			</select> <input id="search" placeholder="검색"> <img
-				class="searchIcon" src="src/icon/con_searh.png">
+				class="searchIcon" src="${pageContext.request.contextPath}/first_mini_project/src/icon/con_searh.png">
 
 		</div>
 	</section>
