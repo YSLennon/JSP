@@ -63,8 +63,6 @@
 		var form = document.formId
 		setSelect();
 		
-		
-		
 		var confirmId = '';
 		var confirmNick = '';
 		
@@ -76,52 +74,43 @@
 				alert("아이디는 5자리 이상 입력해주세요");
 				return;
 			}
-			$.ajax({
-				url : "${pageContext.request.contextPath}/user",
-				type : "POST",
-				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-				dataType : "json",
-				data : {
-					uid : uid,
-					act : "checkUid"
-				},
-				success : function(response) {
-					if (!response.isAvailable) {
-						confirmId = uid;
-						alert("사용 가능한 아이디입니다.");
-					} else {
-						alert("이미 사용중인 아이디입니다. 다른 아이디를 사용해주세요")
-					}
-
-				},
-				error : function(xhr, status, error) {
-					console.error("AJAX Error - Status: " + status
-							+ ", Error: " + error);
-					console.error("Response Text: " + xhr.responseText);
-					alert("There was an error processing the request.");
-				}
-			});
+			requestAjaxMessage(uid,"checkUid", "아이디");
 		}
+		
 
 		function checkNick() {
-			var nickName = form.nickName.value;	
+			var nickName = form.nickName.value;
+
+			if (nickName.length < 1){
+				alert("닉네임은 한글자 이상 입력해주세요");
+				return;
+			}
+			requestAjaxMessage(nickName,"checkNick", "닉네임");
+}
+		
+		function requestAjaxMessage(checkValue, act, message){
+			confirmFlg = false;
 			$.ajax({
 				url : "${pageContext.request.contextPath}/user",
 				type : "POST",
 				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				dataType : "json",
 				data : {
-					nickName : nickName,
-					act : "checkNick",
-					si : '' ,
-					gu : '',
+					checkValue : checkValue,
+					act : act
 				},
 				success : function(response) {
 					if (!response.isAvailable) {
-						confirmNick = nickName;
-						alert("사용 가능한 닉네임입니다.");
+						alert("사용 가능한 " + message + "입니다.");
+
+						if(act === "checkUid"){
+							confirmId = checkValue;
+						}else {
+							confirmNick = checkValue;
+						}
+						
 					} else {
-						alert("이미 사용중인 닉네임입니다. 다른 닉네임을 사용해주세요")
+						alert("이미 사용중인 " + message + "입니다. 다른 " + message + "를 사용해주세요")
 					}
 
 				},
@@ -134,17 +123,24 @@
 			});
 
 		}
+		
 		function setSelect(){
 			
 			requestRegion(form.si, "si");
 			
 			form.si.addEventListener('change', ()=>{
 				form.gu.options.length = 0;
+				var option = document.createElement("option");
+				option.innerHTML = '시/군/구';
+				form.gu.appendChild(option);
 				requestRegion(form.gu, "gu");
 			})
 			
 			form.gu.addEventListener('change', ()=>{
 				form.dong.options.length = 0;
+				var option = document.createElement("option");
+				option.innerHTML = '읍/면/동';
+				form.dong.appendChild(option);
 				requestRegion(form.dong, "dong");
 			})
 		} 
@@ -179,7 +175,6 @@
 		
 		
 		function join() {
-			/* gson도 확인해보자 -> 테스트 코드도 올려뒀으니 처리할때 사용하기! */
 
 			var userData = {
 				uid : form.uid,
@@ -221,6 +216,9 @@
 			// 중복체크 -> 해당 아이디값이 변화했을 경우에도 체크해준다
 			if (userData.uid.value != confirmId) {
 				alert("아이디를 확인해주세요");
+				console.log(confirmId);
+				console.log(userData.uid.value);
+				
 				return;
 			}
 			

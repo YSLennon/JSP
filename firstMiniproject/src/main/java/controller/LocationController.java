@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.RequestDispatcher;
@@ -8,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -26,12 +27,14 @@ public class LocationController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
+		System.out.println("LocationControllerOn");
 		// 비동기 실행
 		final AsyncContext asyncContext = request.startAsync();
 		asyncContext.start(() -> {
 			try {
 				String act = request.getParameter("act");
-				if(act == null) {
+				System.out.println("act: " + act);
+				if(act == null || act == "") {
 					RequestDispatcher dispatcher = request.getRequestDispatcher("first_mini_project/intro.jsp");
 					dispatcher.forward(request, response);
 					return;
@@ -39,21 +42,54 @@ public class LocationController extends HttpServlet {
 				System.out.println(request.getParameter("jsonData"));
 				System.out.println(request.getParameter("act"));
 				
-
+ 
 				if (act.equals("main")) {
 					RequestDispatcher dispatcher = request.getRequestDispatcher("first_mini_project/intro.jsp");
 					dispatcher.forward(request, response);
 				} else if (act.equals("join")) {
 					RequestDispatcher dispatcher = request.getRequestDispatcher("first_mini_project/join.jsp");
 					dispatcher.forward(request, response);
-				}
+				} else if(act.equals("userSchedule")) {
+					RequestDispatcher dispatcher = request.getRequestDispatcher("first_mini_project/listView.jsp");
+					dispatcher.forward(request, response);
+				} else if (act.equals("searchGroup")){
+					RequestDispatcher dispatcher = request.getRequestDispatcher("first_mini_project/listView.jsp");
+					dispatcher.forward(request, response);						
+				} 
+						
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
 				// 비동기 완료처리 -> 컴플릿되면서 클라이언트에서도 이후 데이터 처리를 한다
 				asyncContext.complete();
+			}
+		});
 
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println("LocationControllerOn");
+		final AsyncContext asyncContext = request.startAsync();
+		asyncContext.start(()->{
+			try {
+				String act = request.getParameter("act");
+				 if (act.equals("schedule")) {
+						User userSession = (User) request.getSession().getAttribute("userSession");
+						boolean successSession=!(userSession == null); 
+						
+							response.setContentType("application/json");
+							response.setCharacterEncoding("UTF-8");
+							
+							PrintWriter out = response.getWriter();
+							
+							out.print("{\"success\": "+successSession+"}");
+							out.flush();
+					}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				asyncContext.complete();
 			}
 		});
 

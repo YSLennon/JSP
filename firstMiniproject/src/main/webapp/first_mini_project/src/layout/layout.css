@@ -356,12 +356,13 @@ a:link {
 	display: inline-block;
 	font-size: 100%;
 	margin-left: 15%;
-	width: 50%;
+	width: 60%;
 	height: 4%;
 }
 
 .addrSelect {
 	position: relative;
+	width: 30%;
 	bottom: 1%;
 }
 
@@ -596,20 +597,21 @@ button:active {
 	padding: 20px;
 	border-radius: 10px;
 	width: 60%;
-	height: fit-content;
+	height: 40px;
 }
 
 select {
+	position: relative;
+	left: 10%;
+	bottom: 20px;
 	width: auto;
-	height: 5%;
 	border-radius: 10px;
-	padding: 2%;
 	background-color: #eee;
-	height: 5%;
+	height: 30px;
 }
 
 select:focus {
-	border-radius: 0px;
+	/* border-radius: 0px; */
 }
 
 option {
@@ -620,6 +622,9 @@ option {
 }
 
 #search {
+	position: relative;
+	left: 10%;
+	bottom: 20px;
 	display: inline-block;
 	font-weight: bold;
 	box-sizing: border-box;
@@ -633,11 +638,12 @@ option {
 }
 
 .searchIcon {
-	position: absolute;
+	position: relative;
 	box-sizing: border-box;
 	height: 30%;
-	right: 22%;
-	top: 35%;
+	right: -2%;
+	bottom: 10px;
+	height: 25px;
 }
 
 /* footer */
