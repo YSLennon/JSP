@@ -1,10 +1,10 @@
 package dao;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import model.Board;
@@ -121,6 +121,56 @@ public class BoardDAO extends MainDAO {
 		disconnect();
 
 		return trip;
+	}
+	public HashMap<String, Object> getDetailBoard(String boardNumb) throws SQLException {
+		List<Board> boardList = new ArrayList<>();
+		List<String> uidList = new ArrayList<>();
+		String sql ="SELECT b.boardNo, organizer, title, contents, DISTANCE, b.addr, STATUS, category, SUBSTR(DATETIME,1,LENGTH(DATETIME)-3) AS DATETIME, SUBSTR(b.cdatetime,1,LENGTH(b.cdatetime)-3) AS cdatetime, nickName FROM tbl_board b INNER JOIN tbl_enroll e ON b.boardNo = e.boardNo INNER JOIN tbl_user u ON u.uid = e.uid WHERE b.boardNo = "+boardNumb;
+		
+		System.out.println(sql);
+		
+		connect();
+
+		Statement statement = jdbcConnection.createStatement();
+		ResultSet rs = statement.executeQuery(sql);
+		
+		while (rs.next()) {
+			 	int boardNo = rs.getInt("boardNo");
+			    String organizer = rs.getString("organizer");
+			    String title = rs.getString("title");
+			    String contents = rs.getString("contents");
+			    int distance = rs.getInt("distance");
+			    String addr = rs.getString("addr");
+			    String status = rs.getString("status");
+			    String category = rs.getString("category");
+			    String datetime = rs.getString("datetime");
+			    String cdatetime = rs.getString("cdatetime");			    
+			    Board board = new Board(boardNo, organizer, title, contents, distance, addr, status, category, datetime, cdatetime);
+			    boardList.add(board);
+			    uidList.add(rs.getString("nickName"));
+		}
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("boardList", boardList);
+		map.put("uidList", uidList);
+
+		rs.close();
+		statement.close();
+
+		disconnect();
+
+		return map;
+	}
+	public void removeBoard(String sql) throws SQLException {
+
+		connect();
+
+		Statement statement = jdbcConnection.createStatement();
+		statement.executeUpdate(sql); 
+		statement.close();
+
+		disconnect();
+
 	}
 	 	
 

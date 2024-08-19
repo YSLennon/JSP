@@ -59,10 +59,15 @@ public class LocationController extends HttpServlet {
 					RequestDispatcher dispatcher = request.getRequestDispatcher("first_mini_project/clientInfo.jsp");
 					dispatcher.forward(request, response);						
 				} else if (act.equals("userList")){
-					System.out.println("userList");
 					RequestDispatcher dispatcher = request.getRequestDispatcher("first_mini_project/userList.jsp");
 					dispatcher.forward(request, response);						
-				} 
+				} else if (act.equals("detailViewer")) {
+					RequestDispatcher dispatcher = request.getRequestDispatcher("first_mini_project/detailViewer.jsp");
+					dispatcher.forward(request, response);
+				} else if (act.equals("detailViewer")) {
+					RequestDispatcher dispatcher = request.getRequestDispatcher("first_mini_project/detailViewer.jsp");
+					dispatcher.forward(request, response);
+				}
 						
 
 			} catch (Exception e) {

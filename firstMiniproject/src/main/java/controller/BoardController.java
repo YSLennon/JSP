@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import dao.BoardDAO;
+import dao.UserDAO;
 import model.Board;
 import model.User;
 
@@ -32,7 +33,6 @@ public class BoardController extends HttpServlet {
 		System.out.println("UserGetControllerOn");
 		String act = request.getParameter("act");
 		final AsyncContext asyncContext = request.startAsync();
-		
 		asyncContext.start(() ->{
 			try {
 //				HttpSession session = request.getSession();
@@ -110,6 +110,32 @@ public class BoardController extends HttpServlet {
 						out.print(json);
 						out.flush();	
 					}
+				} else if(act.equals("detailViewer")) {
+					String boardNo = request.getParameter("boardNo");
+					HashMap<String, Object>map = boardDAO.getDetailBoard(boardNo);
+						
+					Gson gson = new Gson();
+					String json = gson.toJson(map);	
+					
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					
+					PrintWriter out = response.getWriter();
+					out.print(json);
+					out.flush();	
+				} else if(act.equals("removeBoard")) {
+					String boardNo = request.getParameter("boardNo");
+					String sql = "DELETE FROM tbl_board WHERE boardNo="+ boardNo;
+					boardDAO.removeBoard(sql);
+					sql = "DELETE FROM tbl_enroll WHERE boardNo="+ boardNo;
+					boardDAO.removeBoard(sql);
+					
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				
+				PrintWriter out = response.getWriter();
+				out.print("{\"message\": \"삭제되었습니다.\"}");
+				out.flush();	
 				}
 				
 			} catch (Exception e) {

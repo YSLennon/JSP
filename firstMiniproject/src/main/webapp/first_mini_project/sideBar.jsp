@@ -45,7 +45,7 @@ if(userSession != null){
         </div>
 
         <div id="history">
-            <div class="historyBlock">
+           <!--  <div class="historyBlock">
                 <div id="historyArea">historyTitle</div>
                 <div id="historyDistance"> 100km</div>
                 <div id="eventDate"> 2024.05.06 13:00</div>
@@ -64,7 +64,7 @@ if(userSession != null){
                 <div id="historyArea">historyTitle</div>
                 <div id="historyDistance"> 100km</div>
                 <div id="eventDate"> 2024.05.06 13:00</div>
-            </div>
+            </div> -->
         </div>
         <div id="trip">
             trip
@@ -130,18 +130,28 @@ function appendHistory(data){
 	}
 
 	
-	document.querySelector("#runTag").addEventListener("click",function(){
+	document.querySelector("#runTag").addEventListener("click",showRunTag);
+    document.querySelector("#cycleTag").addEventListener("click",showCycleTag);
+    
+    <%if(userSession != null){%>
+    	if('<%=userSession.getFavor()%>' === 'C'){
+    		showCycleTag();
+    	} else{
+    		showRunTag();
+    	}
+    <%}else {%>
+    	showRunTag();
+    <%}%>
+	function showRunTag(){
     	document.querySelector("#runTag").style.backgroundColor = 'white';
     	document.querySelector("#cycleTag").style.backgroundColor = '#eee';
         showHistory('R');
-    });
-    document.querySelector("#cycleTag").addEventListener("click",function(){
+	}    
+    function showCycleTag(){
     	document.querySelector("#cycleTag").style.backgroundColor = 'white';
     	document.querySelector("#runTag").style.backgroundColor = '#eee';
         showHistory('C');
-    });
-    showHistory('R');
-    
+    }
     if(<%=sessionAuth%>){
     	var adminPage = document.querySelector("#latestActivity")
     	adminPage.innerHTML = ''

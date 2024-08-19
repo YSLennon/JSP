@@ -10,9 +10,12 @@
 <title>Insert title here</title>
 <style>
 table, th, tr, td {
-	border: 1px solid black;
+	border: 1px solid #eee;
 	border-collapse: collapse;
 	padding: 10px;
+	background-color: white;
+	text-align: center;
+	font-size : 15px;
 }
 </style>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/first_mini_project/src/layout/layout.css">
@@ -31,10 +34,10 @@ if(userSession != null){
 	}
 }
 
-	
 		
 %>
 	<jsp:include page="header.jsp"></jsp:include>
+	
 	<section id="userListContainer" class="container">
 	<jsp:include page="sideBar.jsp"></jsp:include>
 		<table id="tableContainer">
@@ -114,6 +117,7 @@ function initCnt(userId){
 			},
 			success : function(response) {
 				alert(response.message);
+				location.href="${pageContext.request.contextPath}/page?act=userList";
 		},
 			error : function(xhr, status, error) {
 				console.error("AJAX Error - Status: " + status
@@ -123,7 +127,5 @@ function initCnt(userId){
 			}
 		});  
 }
-
-
 
 </script>

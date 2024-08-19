@@ -454,6 +454,7 @@ button:active {
 }
 
 #titleBlock {
+	position:relative;
 	box-sizing: border-box;
 	margin: 0px 5%;
 	border-radius: 10px;
@@ -462,8 +463,39 @@ button:active {
 	font-weight: bold;
 	font-size: 200%;
 }
-
-#boardInfo {
+#modifyBoard{
+    position: relative;
+    position: absolute;
+    right: 3%;
+    border: 1px solid gray;
+    border-radius: 10px;
+    font-size: 15px;
+    color: black;
+    font-weight: normal;
+    top: -33%;
+    padding: 2px 10px;
+    background-color: #eee;
+}
+.clickable{
+	display: none;
+}
+.clickable:active{
+	box-shadow: 1px 1px 1px gray;
+	opacity:0.7;
+}
+#removeBoard{
+	position: absolute;
+    right: -7%;
+    border: 1px solid gray;
+    border-radius: 10px;
+    font-size: 15px;
+    color: black;
+    font-weight: normal;
+    top: -33%;
+    padding: 2px 10px;
+    background-color: #eee;
+}
+.boardInfo {
 	box-sizing: border-box;
 	margin: 0px 2%;
 	border-radius: 10px;
@@ -511,7 +543,22 @@ button:active {
 	margin-top: 20px;
 	text-align: center;
 }
-
+#showMember:hover #memberList{
+	display: block;
+}
+#memberList{
+	position: absolute;
+    top: 100%;
+    left: 0px;
+    color: black;
+    opacity: 1.0;
+    background-color: white;
+    width: 100%;
+    border: 1px solid gray;
+    box-shadow: 1px 1px 1px #eee;
+    border-radius: 50px;
+    display: none;
+}
 #contentsBlock {
 	clear: both;
 	padding: 10px;
@@ -610,8 +657,8 @@ button:active {
 
 #tagZone {
 	clear: both;
-	height: 10vh;
-	margin-top: 10vh;
+	position:relative;
+	height: 7vh;
 }
 
 .tagBlock {
@@ -733,7 +780,7 @@ footer {
 	.joinContainer {
 		width: 750px;
 	}
-	.detVwContainer {
+	#detVwContainer {
 		width: 750px;
 	}
 	.listBlock{
@@ -757,7 +804,7 @@ footer {
 	.joinContainer {
 		width: 710px;
 	}
-	.detVwContainer {
+	#detVwContainer {
 		width: 710px;
 	}
 	.txtZone {

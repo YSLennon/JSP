@@ -29,7 +29,7 @@
 		<jsp:include page="sideBar.jsp"></jsp:include>
 	
 		<div id="listContainer">
-			 <div class="listBlock">
+			 <%-- <div class="listBlock">
 				<a id="title" class="listTitle" href="javascript:;">Title</a>
 				<div id="datetime" class="listDatetime">2024.05.06 13:00 모임 날짜</div>
 				<div id="tagZone">
@@ -46,7 +46,7 @@
 					<option>몰러</option>
 				</select> <input id="search" placeholder="검색"> 
 				<img class="searchIcon" src="${pageContext.request.contextPath}/first_mini_project/src/icon/con_searh.png">
-			</div> 
+			</div>  --%>
 			
 		</div>
 	</section>
@@ -59,8 +59,6 @@
 			String favor ="'A'" ;
 			String act = request.getParameter("act");
 			System.out.println("pageName act = "+ act);
-
-	
 
 		if(act.equals("Schedule")){
 			//TODO 개인 기록 Session값에 맞춰서 join된 테이블을 조회 후 보드를 출력
@@ -117,7 +115,7 @@ function appendList(data){
 			const listItem = document.createElement('div');
 			listItem.className = 'listBlock';
 			listItem.innerHTML = `
-	            <a id="title" class="listTitle" href="javascript:;">`+item.title+`</a>
+	            <a id="title" class="listTitle" href="${pageContext.request.contextPath}/page?act=detailViewer&boardNo=`+item.boardNo+`">`+item.title+`</a>
 	            <div id="datetime" class="listDatetime">`+item.datetime+`</div>
 	            <div id="tagZone">
 	                <div id="category" class="tagBlock">`+category+`</div>
