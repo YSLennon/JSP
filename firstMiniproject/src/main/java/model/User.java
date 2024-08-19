@@ -33,36 +33,37 @@ public class User {
 		this.udatetime = udatetime;
 	}
 	// loginSessionInformation
-	public User(String uid, String favor, String authority, String udatetime) {
+	public User(String uid,String nickName, String favor, String authority, String udatetime) {
 		this.uid = uid;
+		this.nickName = nickName;
 		this.favor = favor;
 		this.authority = authority;
 		this.udatetime = udatetime;
 	}
 	
 	// insertUser
-	public User(String uid, String pwd, String name, String phone, String addr, String nickName, String favor) {
-		this.uid = uid;
-		this.pwd = pwd;
-		this.name = name;
-		this.phone = phone;
-		this.addr = addr;
-		this.nickName = nickName;
-		this.favor = favor;
-	}
+		public User(String uid, String pwd, String name, String phone, String addr, String nickName, String favor) {
+			this.uid = uid;
+			this.pwd = pwd;
+			this.name = name;
+			this.phone = phone;
+			this.addr = addr;
+			this.nickName = nickName;
+			this.favor = favor;
+		}
 
-	public User(String uid, int cnt, String name, String phone, String addr, String nickName, String favor,
-			String cdatetime, String udatetime) {
-		this.uid = uid;
-		this.cnt = cnt;
-		this.name = name;
-		this.phone = phone;
-		this.addr = addr;
-		this.nickName = nickName;
-		this.favor = favor;
-		this.cdatetime = cdatetime;
-		this.udatetime = udatetime;
-	}
+		public User(String uid, int cnt, String name, String phone, String addr, String nickName, String favor,
+				String cdatetime, String udatetime) {
+			this.uid = uid;
+			this.cnt = cnt;
+			this.name = name;
+			this.phone = phone;
+			this.addr = addr;
+			this.nickName = nickName;
+			this.favor = favor;
+			this.cdatetime = cdatetime;
+			this.udatetime = udatetime;
+		}
 
 	// Getters and Setters
 	public String getUid() {

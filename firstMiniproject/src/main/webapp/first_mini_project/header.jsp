@@ -32,10 +32,13 @@
 	<div id="headLine">hi</div>
 	<header>
 		<div id="menuBar">
+			<div id="dropdown">
+				<a href="${pageContext.request.contextPath}/page?act=clientInfo"><div>회원정보 수정</div></a>
+			</div>
 			<div id="webTitle">
 				<a href="${pageContext.request.contextPath}/page?act=main">StrideCycle</a>
 			</div>
-			<a class="menuBtnC" href="javascript:;"> <img id="menuBtn"
+			<a class="menuBtnC" onclick="openMenu()" href="javascript:;"> <img id="menuBtn"
 				src="${pageContext.request.contextPath}/first_mini_project/src/icon/icon_menu_btn.png"></a>
 			<a id="loginBtn" class="menu" href="javascript:;"> <%=loginTXT%> </a> 
 			<a id="scheduleBtn" class="menu" href="javascript:;"> Schedule </a> 
@@ -188,6 +191,7 @@
 			if(document.body.style.overflow == 'hidden'){
 				modalClose(); //모달 닫기 함수 호출
 				enableScroll();
+				closeMenu();
 			}
 
 		});
@@ -200,11 +204,24 @@
 			if(event.key === "Escape"){
 				modalClose(); //모달 닫기 함수 호출
 				enableScroll();
+				closeMenu();
 			}
 		})
 		
 	});
-	
+	function closeMenu(){
+		document.querySelector("#dropdown").style.display='none';
+		document.querySelector('#menuBar').style.borderBottomRightRadius = '50px';
+	}
+	function openMenu(){
+		if(document.querySelector('#dropdown').style.display==='none'){
+			document.querySelector('#dropdown').style.display='inline-block';
+			document.querySelector('#menuBar').style.borderBottomRightRadius = '0px';
+		} else {
+			document.querySelector("#dropdown").style.display='none';
+			document.querySelector('#menuBar').style.borderBottomRightRadius = '50px';
+		}
+	}
 	
 	</script>
 </body>

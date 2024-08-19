@@ -3,9 +3,9 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.AsyncContext;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -57,7 +57,7 @@ public class UserController extends HttpServlet {
 					Gson gson = new Gson();
 					User user = gson.fromJson(jsonData, User.class);
 					userDAO.insertUser(user);
-					user = new User(user.getUid(), user.getFavor(), user.getAuthority(), user.getUdatetime());
+					user = new User(user.getUid(),user.getNickName(), user.getFavor(), user.getAuthority(), user.getUdatetime());
 					session.setAttribute("userSession", user);
 					
 					response.sendRedirect("/firstMiniproject/page?act=main");
@@ -84,7 +84,7 @@ public class UserController extends HttpServlet {
 					} else {
 						//아이디 확인 비밀번호 체크 후 로그인 및 cnt 초기화
 						User user = userDAO.login(uid,pwd);
-						System.out.println("비밀번호체크");
+
 						if(user == null) {
 							userDAO.addCNT(uid);
 							resultMessage = "틀린 비밀번호입니다. 비밀번호를 확인해주세요.";
@@ -92,7 +92,7 @@ public class UserController extends HttpServlet {
 						} else {
 							//CNT 초기화 및 세션정보 저장
 							userDAO.initCNT(uid);
-							user = new User(user.getUid(), user.getFavor(), user.getAuthority(), user.getUdatetime());
+							user = new User(user.getUid(),user.getNickName(), user.getFavor(), user.getAuthority(), user.getUdatetime());
 							session.setAttribute("userSession", user);
 							resultMessage = "로그인되었습니다.";
 							successFlg = true;	
@@ -101,6 +101,57 @@ public class UserController extends HttpServlet {
 					}
 					String jsonResponse = "{\"success\": " + successFlg + ", \"resultMessage\": \"" + resultMessage + "\"}";
 					out.print(jsonResponse);
+					out.flush();
+					
+				} else if(act.equals("clientInfo")) {
+					User userSession = (User) session.getAttribute("userSession");
+					String userId = str(userSession.getUid());
+					
+					String sql = "select * from tbl_user where uid = " + userId;
+					List<User> user = userDAO.searchUser(sql);
+					Gson gson = new Gson();
+					String json = gson.toJson(user);
+					
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					
+					PrintWriter out = response.getWriter();
+					out.print(json);
+					out.flush();
+				} else if (act.equals("changeInfo")) { 
+					// changeInfo 
+					String jsonData = request.getParameter("jsonData");
+					Gson gson = new Gson();
+					User user = gson.fromJson(jsonData, User.class);
+					userDAO.changeUser(user);
+					user = new User(user.getUid(),user.getNickName(), user.getFavor(), user.getAuthority(), user.getUdatetime());
+					session.setAttribute("userSession", user);
+					
+					response.sendRedirect("/firstMiniproject/page?act=main");
+					
+				} else if(act.equals("userList")) {
+					String sql = "select * from tbl_user";
+					System.out.println("sql : " + sql);
+					List<User> list = userDAO.searchUser(sql);
+					Gson gson = new Gson();
+					String json = gson.toJson(list);
+					
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					
+					PrintWriter out = response.getWriter();
+					out.print(json);
+					out.flush();
+				} else if(act.equals("initCnt")) {
+					String uid = str(request.getParameter("uid"));
+					userDAO.initCNT(uid);
+					
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					String message = "{ \"message\" : \"접속 제한이 해제되었습니다.\"}";
+					
+					PrintWriter out = response.getWriter();
+					out.print(message);
 					out.flush();
 					
 				}

@@ -11,10 +11,9 @@ import model.User;
 
 public class UserDAO extends MainDAO {
 
-	public List<User> listAllUsers() throws SQLException {
+	public List<User> searchUser(String sql) throws SQLException {
 		List<User> userList = new ArrayList<>();
 
-		String sql = "SELECT * FROM tbl_user";
 		System.out.println(sql);
 		connect();
 
@@ -24,14 +23,17 @@ public class UserDAO extends MainDAO {
 
 			String uid = rs.getString("uid");
 			int cnt = rs.getInt("cnt");
+			String pwd = rs.getString("pwd");
 			String name = rs.getString("name");
 			String phone = rs.getString("phone");
 			String addr = rs.getString("addr");
 			String nickName = rs.getString("nickName");
 			String favor = rs.getString("favor");
+			String authority = rs.getString("authority");
 			String cdatetime = rs.getString("cdatetime");
 			String udatetime = rs.getString("udatetime");
-			User user = new User(uid, cnt, name, phone, addr, nickName, favor, cdatetime, udatetime);
+			User user = new User(uid, pwd, cnt, name, phone, addr, nickName, favor, authority, cdatetime, udatetime);
+			
 			userList.add(user);
 		}
 
@@ -89,16 +91,17 @@ public class UserDAO extends MainDAO {
 		connect();
 		User user = null;
 		try (Statement statement = jdbcConnection.createStatement()) {
-			String sql = "SELECT uid, favor, authority, udatetime FROM tbl_user WHERE uid = " + uid + " and pwd = "
+			String sql = "SELECT uid, nickName, favor, authority, udatetime FROM tbl_user WHERE uid = " + uid + " and pwd = "
 					+ pwd;
 			ResultSet rs = statement.executeQuery(sql);
 
 			if (rs.next()) {
 				String userId = rs.getString("uid");
+				String nickName = rs.getString("nickName");
 				String favor = rs.getString("favor");
 				String authority = rs.getString("authority");
 				String udatetime = rs.getString("udatetime");
-				user = new User(userId, favor, authority, udatetime);
+				user = new User(userId,nickName, favor, authority, udatetime);
 			}
 		} catch (Exception e) {
 			System.out.println("login Error: " + e);
@@ -130,6 +133,7 @@ public class UserDAO extends MainDAO {
 	public void initCNT(String uid) throws SQLException {
 		connect();
 		String sql = "update tbl_user set cnt = 0 where uid = " + uid;
+		System.out.println(sql);
 		try (Statement statement = jdbcConnection.createStatement()) {
 			statement.executeUpdate(sql);
 		} catch (Exception e) {
@@ -148,5 +152,31 @@ public class UserDAO extends MainDAO {
 		} finally {
 			disconnect();
 		}
+	}
+	
+	public void changeUser(User user) throws SQLException {
+
+		String sql = "update tbl_user set pwd = ?, NAME = ? , phone = ? , addr = ? , nickName = ? , favor = ? where uid = ? ";
+		
+		connect();
+		try (PreparedStatement statement = jdbcConnection.prepareStatement(sql)) {
+			statement.setString(1, user.getPwd());
+			statement.setString(2, user.getName());
+			statement.setString(3, user.getPhone());
+			statement.setString(4, user.getAddr());
+			statement.setString(5, user.getNickName());
+			statement.setString(6, user.getFavor());
+			statement.setString(7, user.getUid()); 
+
+			statement.executeUpdate();
+			
+		} catch(Exception e) {
+			System.out.println("insertUser Error: "+ e);
+		}
+		finally {
+			disconnect();
+		}
+		;
+
 	}
 }

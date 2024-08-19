@@ -12,7 +12,7 @@ html, body {
 
 .container {
 	width: fit-content;
-	height:100vh;
+	height:calc(fit-content + 20vh);
 	display: flex;
 	margin: 0px auto;
 	margin-bottom: 10vh;
@@ -95,11 +95,33 @@ header {
 	background-color: #F9714E;
 	box-sizing: border-box;
 }
-
+#dropdown{
+    position: absolute;
+    display:none;
+    right: -1%;
+    bottom: -70%;
+    height: 70%;
+	box-sizing: border-box;
+	float: right;
+	margin-right: 10px;
+	margin-top: 10px;
+	padding: 10px;
+	box-shadow:2px 2px 2px gray;
+	border: 1px solid gray;
+	opacity: 0.9;
+	line-height: 80%;
+	background-color: white;
+	box-sizing: border-box;
+}
+#dropdown:active {
+	opacity: 0.8;
+	box-shadow: 1px 1px 1px gray;
+}
 .menuBtnC:active {
 	opacity: 0.9;
 	box-shadow: 1px 1px 1px gray;
 }
+
 #menuTitle {
 	font-weight: bold;
 	font-size: 250%;
@@ -145,13 +167,19 @@ header {
 #latestActivity {
 	margin: 10% 0px;
 }
-
+#toAuthPage{
+	color: blue;
+}
+#toAuthPage:active {
+	opacity: 0.8;
+	text-shadow: 1px 1px 1px gray;
+}
 #viewMyHistory {
 	color: #abcdef;
 	line-height: 10px;
 }
 
-#sideTagZone {
+.sideTagZone {
 	background-color: #eee;
 	float: left;
 	width: 50%;
@@ -160,13 +188,23 @@ header {
 	border-top-right-radius: 10px;
 }
 
+.sideTagZone:hover {
+	box-shadow: 1px -1px 1px gray;
+	border: 1px solid gray;
+	border-bottom: 0px;
+}
+.sideTagZone:active {
+	opacity:0.8;
+	box-shadow: 1px -1px 1px gray;
+	border: 1px solid gray;
+	border-bottom: 0px;
+}
 .tagIcon {
 	box-sizing: border-box;
 	display: inline-block;
 	width: 40%;
 	margin: 2px 30%;
 }
-
 #history {
 	padding: 10px;
 	clear: left;
@@ -457,9 +495,6 @@ button:active {
 	border-radius: 10px;
 }
 
-#tagZone {
-	
-}
 
 .detTagBlock {
 	opacity: 0.9;
@@ -529,11 +564,21 @@ button:active {
 /* listView */
 #listContainer {
 	box-sizing: border-box;
-	width: 100%;
-	height: 1000px;
+	width: fit-content;
 	padding: 50px;
 }
-
+.categorySelect{
+    box-sizing: border-box;
+    width: 100vw;
+    height: 0vh;
+    font-weight: bold;
+    position: relative;
+}
+#boardSelect{
+	position: relative;
+	left: 80vw;
+	top: 10%;
+}
 .listBlock {
 	border: 3px solid white;
 	box-shadow: 0px 0px 2px gray;
@@ -542,8 +587,8 @@ button:active {
 	margin: 2% 5%;
 	padding: 2%;
 	border-radius: 10px;
-	width: 90%;
-	height: 17%;
+	width: 80vw;
+	height: 20vh;
 	background-color: #eee;
 	font-weight: bold;
 }
@@ -565,8 +610,8 @@ button:active {
 
 #tagZone {
 	clear: both;
-	height: 30%;
-	margin-top: 10%;
+	height: 10vh;
+	margin-top: 10vh;
 }
 
 .tagBlock {
@@ -574,8 +619,8 @@ button:active {
 	border-radius: 20px;
 	padding: 0px 4%;
 	width: fit-content;
-	height: 100%;
-	line-height: 200%;
+	height: 5vh;
+	line-height: 320%;
 	background-color: #F9714E;
 	color: white;
 	text-align: center;
@@ -611,7 +656,7 @@ select {
 }
 
 select:focus {
-	/* border-radius: 0px; */
+	border-radius: 0px;
 }
 
 option {
@@ -691,6 +736,12 @@ footer {
 	.detVwContainer {
 		width: 750px;
 	}
+	.listBlock{
+	width: 800px;
+	}
+	.categorySelect{
+	width: 800px;
+	}
 
 }
 @media screen and (min-width: 768px) {
@@ -711,5 +762,11 @@ footer {
 	}
 	.txtZone {
 		width: 250px;
+	}
+	.listBlock {
+		width: 800px;
+	}
+	.categorySelect{
+	width: 800px;
 	}
 }

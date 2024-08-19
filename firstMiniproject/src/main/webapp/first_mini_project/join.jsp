@@ -193,8 +193,7 @@
 					phone : form.phone.value,
 					addr : form.dong.value,
 					nickName : form.nickName.value,
-					favor : form.favor.value,
-					act : "join"
+					favor : form.favor.value
 				};
 
 			// 빈칸 검색
