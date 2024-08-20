@@ -239,7 +239,7 @@
 				success : function(response) {
 					alert("회원 정보가 변경되었습니다.");
 
-					form.action = "${pageContext.request.contextPath}/page?act=main";
+					form.action = "${pageContext.request.contextPath}/page?act=searchGroup";
 					form.method = "post";
 					form.submit(); 
 				},
@@ -247,7 +247,7 @@
 					console.error("AJAX Error - Status: " + status
 							+ ", Error: " + error);
 					console.error("Response Text: " + xhr.responseText);
-					alert("회원가입 처리 중 오류가 발생했습니다.");
+					alert("회원정보 처리 중 오류가 발생했습니다.");
 				}
 			}); 
 			

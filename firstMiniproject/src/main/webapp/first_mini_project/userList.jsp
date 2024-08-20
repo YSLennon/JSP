@@ -91,7 +91,12 @@ function appendList(data){
 	data.forEach(user => {
 		var item = document.createElement("tr");
 		item.innerHTML = '';
-		var checkCnt = (user.cnt >= 5)? "<button type='button' onclick='initCnt(`"+user.uid+"`)'>초기화</button>" : "";
+		var checkCnt = ""
+		if(user.cnt >= 5){
+			checkCnt = "<button type='button' onclick='initCnt(`"+user.uid+"`)'>초기화</button>"
+		} else if(user.cnt == -5){
+			checkCnt = "<button type='button' style='background-color:#F9714E' onclick='initCnt(`"+user.uid+"`)'>초기화</button>"
+		}
 		
 		item.innerHTML =`
 			<td>` + user.uid + `</td>

@@ -91,17 +91,18 @@ public class UserDAO extends MainDAO {
 		connect();
 		User user = null;
 		try (Statement statement = jdbcConnection.createStatement()) {
-			String sql = "SELECT uid, nickName, favor, authority, udatetime FROM tbl_user WHERE uid = " + uid + " and pwd = "
+			String sql = "SELECT uid, nickName, addr, favor, authority, udatetime FROM tbl_user WHERE uid = " + uid + " and pwd = "
 					+ pwd;
 			ResultSet rs = statement.executeQuery(sql);
 
 			if (rs.next()) {
 				String userId = rs.getString("uid");
 				String nickName = rs.getString("nickName");
+				String addr = rs.getString("addr");
 				String favor = rs.getString("favor");
 				String authority = rs.getString("authority");
 				String udatetime = rs.getString("udatetime");
-				user = new User(userId,nickName, favor, authority, udatetime);
+				user = new User(userId,nickName,addr, favor, authority, udatetime);
 			}
 		} catch (Exception e) {
 			System.out.println("login Error: " + e);
@@ -133,7 +134,6 @@ public class UserDAO extends MainDAO {
 	public void initCNT(String uid) throws SQLException {
 		connect();
 		String sql = "update tbl_user set cnt = 0 where uid = " + uid;
-		System.out.println(sql);
 		try (Statement statement = jdbcConnection.createStatement()) {
 			statement.executeUpdate(sql);
 		} catch (Exception e) {
@@ -178,5 +178,20 @@ public class UserDAO extends MainDAO {
 		}
 		;
 
+	}
+	
+	public int updateQuery(String sql) throws SQLException {
+		// 업데이트 실행 후 영향받은 행 갯수 리턴
+		connect();
+		int number = 0;
+		try (Statement statement = jdbcConnection.createStatement()) {
+			number = statement.executeUpdate(sql);
+			
+		} catch (Exception e) {
+			System.out.println("checkCNT Error: " + e);
+		} finally {
+			disconnect();
+		}
+		return number;
 	}
 }

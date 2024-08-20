@@ -57,7 +57,7 @@ public class UserController extends HttpServlet {
 					Gson gson = new Gson();
 					User user = gson.fromJson(jsonData, User.class);
 					userDAO.insertUser(user);
-					user = new User(user.getUid(),user.getNickName(), user.getFavor(), user.getAuthority(), user.getUdatetime());
+					user = new User(user.getUid(),user.getNickName(),user.getAddr(), user.getFavor(), user.getAuthority(), user.getUdatetime());
 					session.setAttribute("userSession", user);
 					
 					response.sendRedirect("/firstMiniproject/page?act=main");
@@ -79,8 +79,23 @@ public class UserController extends HttpServlet {
 						resultMessage = "5회 이상 로그인에 실패하였습니다. 관리자에게 문의해주세요.";
 					} else if(cnt == -1) {
 						//존재하지 않는 아이디
-						
 						resultMessage = "존재하지 않는 아이디입니다.";
+					} else if(cnt == -5) {
+						//존재하지 않는 아이디
+						resultMessage = "현재 로그인 횟수 초기화 대기중입니다.";
+					} else if(cnt == -2){
+						User user = userDAO.login(uid,pwd);
+						if(user == null) {
+							resultMessage = "틀린 비밀번호입니다. 비밀번호를 확인해주세요.";	
+						} else {
+							//CNT 초기화 및 세션정보 저장
+							userDAO.initCNT(uid);
+							user = new User(user.getUid(),user.getNickName(),user.getAddr(), user.getFavor(), user.getAuthority(), user.getUdatetime());
+							session.setAttribute("userSession", user);
+							resultMessage = "로그인 시도횟수 초기화 신청이 있습니다. 회원 관리페이지를 확인해주세요.";
+							successFlg = true;
+							System.out.println(resultMessage + successFlg);
+						}
 					} else {
 						//아이디 확인 비밀번호 체크 후 로그인 및 cnt 초기화
 						User user = userDAO.login(uid,pwd);
@@ -92,7 +107,7 @@ public class UserController extends HttpServlet {
 						} else {
 							//CNT 초기화 및 세션정보 저장
 							userDAO.initCNT(uid);
-							user = new User(user.getUid(),user.getNickName(), user.getFavor(), user.getAuthority(), user.getUdatetime());
+							user = new User(user.getUid(),user.getNickName(),user.getAddr(), user.getFavor(), user.getAuthority(), user.getUdatetime());
 							session.setAttribute("userSession", user);
 							resultMessage = "로그인되었습니다.";
 							successFlg = true;	
@@ -127,7 +142,7 @@ public class UserController extends HttpServlet {
 					String sql = "select * from tbl_user where uid = "+str(user.getUid());
 					
 					user = userDAO.searchUser(sql).get(0);
-					user = new User(user.getUid(),user.getNickName(), user.getFavor(), user.getAuthority(), user.getUdatetime());
+					user = new User(user.getUid(),user.getNickName(),user.getAddr(), user.getFavor(), user.getAuthority(), user.getUdatetime());
 					session.setAttribute("userSession", user);
 					
 					response.sendRedirect("/firstMiniproject/page?act=main");
@@ -156,7 +171,25 @@ public class UserController extends HttpServlet {
 					PrintWriter out = response.getWriter();
 					out.print(message);
 					out.flush();
+				} else if(act.equals("initAcount")){
+					String uid = str(request.getParameter("uid"));
+					String phone = str(request.getParameter("phone"));
+					String sql = "update tbl_user u INNER JOIN (SELECT uid FROM tbl_user WHERE uid = "+uid+" AND phone = "+phone+") AS subquery ON u.uid = subquery.uid SET cnt = -5";
 					
+					String message = "{ \"message\" : \"정보를 다시 확인해주세요.\"}";
+					if(userDAO.updateQuery(sql) == 1) {
+						sql = "update tbl_user set cnt = -2 where uid = 'admin'";
+						if(userDAO.updateQuery(sql) == 1);{
+							message = "{ \"message\" : \"로그인 시도횟수 초기화 신청이 완료되었습니다.\"}";
+						}
+					};
+					
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					
+					PrintWriter out = response.getWriter();
+					out.print(message);
+					out.flush();
 				}
 
 			} catch (Exception e) {

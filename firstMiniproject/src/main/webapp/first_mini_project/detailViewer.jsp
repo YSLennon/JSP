@@ -58,10 +58,20 @@
 						document.querySelectorAll(".clickable").forEach(obj => {
 							obj.style.display = 'block';
 						})
-						document.querySelector("#boardStatus").classList.add("clickable2");
-						document.querySelector("#boardStatus").addEventListener("click", () => {
-							fnChangeStatus(<%=request.getParameter("boardNo")%>);
-						})
+						if(document.querySelector("#boardStatus").innerHTML === '모집중'){
+							document.querySelector("#boardStatus").classList.add("clickable2");
+							document.querySelector("#boardStatus").addEventListener("click", () => {
+								fnChangeStatus(<%=request.getParameter("boardNo")%>);
+							})	
+						}
+					} else {
+						if(document.querySelector("#boardStatus").innerHTML === '모집중'){
+							document.querySelector("#boardStatus").innerHTML = '신청하기'
+							document.querySelector("#boardStatus").classList.add("clickable2");
+							document.querySelector("#boardStatus").addEventListener("click", () => {
+								fnSubmit(<%=request.getParameter("boardNo")%>);
+							})	
+						}
 					}
 					
 					//TODO map 데이터 로드해오기
@@ -185,7 +195,29 @@
 	 		});	
 		}     	
 	}
-	
+	function fnSubmit(boardNo){
+		if(confirm("확인을 누르시면 신청됩니다.")){
+			$.ajax({
+	 			url : "${pageContext.request.contextPath}/board",
+	 			type : "POST",
+	 			dataType : "json",
+	 			data : {
+	 				act : 'submitBoard',
+	 				boardNo : boardNo
+	 			},
+	 			success : function(response) {
+					alert(response.message);
+					location.href="${pageContext.request.contextPath}/page?act=userSchedule"
+				},
+	 			error : function(xhr, status, error) {
+	 				console.error("AJAX Error - Status: " + status
+	 						+ ", Error: " + error);
+	 				console.error("Response Text: " + xhr.responseText);
+	 				alert("lsitView Error.");
+	 			}
+	 		});	
+		}     	
+	}
 
 	 // Drawing Manager에서 데이터를 가져와 도형을 표시할 아래쪽 지도 div
 	

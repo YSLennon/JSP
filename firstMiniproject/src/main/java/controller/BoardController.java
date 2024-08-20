@@ -111,9 +111,10 @@ public class BoardController extends HttpServlet {
 						out.flush();	
 					}
 				} else if(act.equals("detailViewer")) {
+					System.out.println("detailViewerControllerBoard");
 					String boardNo = request.getParameter("boardNo");
 					HashMap<String, Object>map = boardDAO.getDetailBoard(boardNo);
-						
+					
 					Gson gson = new Gson();
 					String json = gson.toJson(map);	
 					
@@ -147,8 +148,8 @@ public class BoardController extends HttpServlet {
 					String addr = request.getParameter("addr");
 					String map = request.getParameter("map");
 					String datetime= request.getParameter("datetime");
-					String sql = "INSERT INTO tbl_board (organizer, title, contents, category, distance, addr, map, datetime) VALUES ('"+organizer+"', '"+title+"', '"+contents+"', '"+boardCategory+"', "+distance+", '"+addr+"', '"+map+"', STR_TO_DATE('"+datetime+"', '%Y-%m%Y-%m-%d %H:%i%d %H:%i'))";
-					
+					String sql = "INSERT INTO tbl_board (organizer, title, contents, category, distance, addr, map, datetime) VALUES ('"+organizer+"', '"+title+"', '"+contents+"', '"+boardCategory+"', "+distance+", '"+addr+"', '"+map+"', STR_TO_DATE('"+datetime+"', '%Y-%m-%d %H:%i'))";
+					System.out.println(sql);
 
 					boardDAO.updateBoard(sql);
 					
@@ -195,6 +196,29 @@ public class BoardController extends HttpServlet {
 					PrintWriter out = response.getWriter();
 					out.print("{\"message\": \"완료처리되었습니다.\"}");
 					out.flush();	
+				} else if (act.equals("submitBoard")) {
+					User userSession = (User) request.getSession().getAttribute("userSession");
+					String uid = str(userSession.getUid());
+					String boardNo = request.getParameter("boardNo");
+					
+					String sql = "select * from tbl_enroll where uid ="+uid+" and boardNo = "+boardNo;
+					
+					
+					String resultMessage ="";
+					if(boardDAO.isExist(sql)) {
+						resultMessage ="이미 신청한 모임입니다";	
+					} else {
+						sql = "insert into tbl_enroll (uid, boardNo) values ("+uid+", "+boardNo+")";
+						resultMessage ="신청되었습니다";		
+						boardDAO.updateBoard(sql);
+	
+					}
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					
+					PrintWriter out = response.getWriter();
+					out.print("{\"message\": \""+resultMessage+".\"}");
+					out.flush();					
 				}
 				
 			} catch (Exception e) {

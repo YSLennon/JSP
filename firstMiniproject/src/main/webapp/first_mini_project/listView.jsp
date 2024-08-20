@@ -135,6 +135,8 @@ function appendList(data){
 			`;
 			container.appendChild(listItem);
 		})
+		
+		/* 
 		const searchItem = document.createElement('div');
 		searchItem.id = 'searchZone';
 		searchItem.innerHTML =`
@@ -146,6 +148,8 @@ function appendList(data){
 			class="searchIcon" src="${pageContext.request.contextPath}/first_mini_project/src/icon/con_searh.png">
 		`
 		container.appendChild(searchItem);
+		 */
+		
 	}
 	function getStatusLabel(status, isLogin){
 		if(isLogin){

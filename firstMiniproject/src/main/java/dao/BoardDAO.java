@@ -122,7 +122,7 @@ public class BoardDAO extends MainDAO {
 		List<Board> boardList = new ArrayList<>();
 		List<String> uidList = new ArrayList<>();
 		String sql ="SELECT b.boardNo, organizer, title, contents, DISTANCE, b.addr, STATUS, map, category, SUBSTR(DATETIME,1,LENGTH(DATETIME)-3) AS DATETIME, SUBSTR(b.cdatetime,1,LENGTH(b.cdatetime)-3) AS cdatetime, nickName FROM tbl_board b INNER JOIN tbl_enroll e ON b.boardNo = e.boardNo INNER JOIN tbl_user u ON u.uid = e.uid WHERE b.boardNo = "+boardNumb;
-				
+				System.out.println(sql);
 		connect();
 
 		Statement statement = jdbcConnection.createStatement();
@@ -166,6 +166,18 @@ public class BoardDAO extends MainDAO {
 
 		disconnect();
 
+	}
+	public boolean isExist(String sql) throws SQLException{
+		connect();
+
+		Statement statement = jdbcConnection.createStatement();
+		ResultSet rs = statement.executeQuery(sql); 
+		boolean answer = rs.next();
+		
+		statement.close();
+		disconnect();
+		
+		return answer;
 	}
 	 	
 

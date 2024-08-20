@@ -33,9 +33,10 @@ public class User {
 		this.udatetime = udatetime;
 	}
 	// loginSessionInformation
-	public User(String uid,String nickName, String favor, String authority, String udatetime) {
+	public User(String uid,String nickName,String addr, String favor, String authority, String udatetime) {
 		this.uid = uid;
 		this.nickName = nickName;
+		this.addr = addr;
 		this.favor = favor;
 		this.authority = authority;
 		this.udatetime = udatetime;

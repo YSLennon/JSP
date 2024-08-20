@@ -12,7 +12,7 @@
 
 </head>
 
-<body>
+<body class="closeMod">
 	<%@ page import="model.User"%>
 	<%
 	// TODO 여유되면 하기! cloc 이용해서 로그인 시 로케이션으로 이동
@@ -29,8 +29,8 @@
 	}
 	%>
 
-	<div id="headLine">함께 달리고, 함께 사이클링을 즐기세요.</div>
-	<header>
+	<div id="headLine" class="closeMod">함께 달리고, 함께 사이클링을 즐기세요.</div>
+	<header class="closeMod">
 		<div id="menuBar">
 			<div id="dropdown" style="display:none;">
 				<a href="${pageContext.request.contextPath}/page?act=clientInfo"><div>회원정보 수정</div></a>
@@ -58,7 +58,7 @@
 				placeholder="password">
 			<div class="find" id="findAccount">
 				로그인 시도가 불가능하신가요? <br>
-				<a class="find skyblue" href="javascript:;" id="findPwd"> 관리자에게 문의하기</a>
+				<a class="find skyblue" href="javascript:;" id="contactAdmin"> 관리자에게 문의하기</a>
 			</div>
 			<button type="button" id="loginSignInBtn">로그인</button>
 		</form>
@@ -66,13 +66,36 @@
 			계정이 없으신가요? <a class="skyblue" href="${pageContext.request.contextPath}/page?act=join"> 회원가입</a>
 		</div>
 	</div>
-
+	
+	<!-- 문의페이지 -->
+	<div class="modalPopup" id="modalPopup2">
+		<div id="loginTitle">StrideCycle</div>
+		<form name="initAcountForm">
+			<input class="loginInput" type="text" name="uid" placeholder="id">
+			<input class="loginInput" type="text" name="phone"
+				placeholder="phone">
+			<div class="find" id="findAccount">
+				아이디와 휴대폰번호를 입력해주세요
+			</div>
+			<button type="button" onclick="initAcount()" id="loginSignInBtn">로그인 초기화 문의하기</button>
+		</form>
+		<div id="joinZone">
+			계정이 없으신가요? <a class="skyblue" href="${pageContext.request.contextPath}/page?act=join"> 회원가입</a>
+		</div>
+	</div>
+	
 
 	<script>
 	
 
-    
 	// loginModalPopup
+	document.querySelectorAll(".modalPopup").forEach(item => {
+		item.addEventListener("click", function(event){
+		    event.stopPropagation();
+		})	
+	})
+	
+	
     function disableScroll() {
    // body 요소의 overflow를 hidden으로 변경하여 스크롤 비활성화
    document.body.style.overflow = 'hidden';
@@ -84,7 +107,31 @@
    }
 	function modalClose() {
 		$("#modalPopup").fadeOut(); //페이드아웃 효과
+		$("#modalPopup2").fadeOut(); //페이드아웃 효과
 	}
+	function initAcount(){
+		var form = document.initAcountForm
+		$.ajax({
+ 			url : "${pageContext.request.contextPath}/user",
+ 			type : "POST",
+ 			dataType : "json",
+ 			data : {
+ 				act : 'initAcount',
+ 				uid : form.uid.value,
+ 				phone : form.phone.value
+ 			},
+ 			success : function(response) {
+				alert(response.message);
+				modalClose();
+			},
+ 			error : function(xhr, status, error) {
+ 				console.error("AJAX Error - Status: " + status
+ 						+ ", Error: " + error);
+ 				console.error("Response Text: " + xhr.responseText);
+ 			}
+ 		});  
+	};
+	
 	$(function(){
 		$("#loginSignInBtn").click(function(){
          //로그인 이벤트 처리
@@ -123,7 +170,6 @@
      	});
 
 		$("#scheduleBtn").click(function(){
-	         //로그인 이벤트 처리
 	         	$.ajax({
 		 			url : "${pageContext.request.contextPath}/page",
 		 			type : "POST",
@@ -148,44 +194,31 @@
 		 		}); 
 	     	});
 		
-		$("#loginBtn").click(function(){        
+		$("#loginBtn").click(function(event){        
 	    	 if('<%=loginTXT%>' === "login") {
 				//팝업을 table속성으로 바꿔준 후 hide()로 숨기고 다시 fadeIn()으로 효과
 				$("#modalPopup").css('display', 'table').hide().fadeIn(function() {
 					document.getElementsByName("uid")[0].focus();
 				});
 				disableScroll();
+				event.stopPropagation();  
+
 			} else {
 				alert("로그아웃 되었습니다.");
 				location.href = "${pageContext.request.contextPath}/user?act=logout";
 			}
 		});
-		<% //TODO 관리자에게 문의해서 로그인 시도 횟수 초기화하기! DB정보에 넣어야할듯 관리자로 링크해서%>
-		$("#findPwd").click(function(){
-	         //로그인 이벤트 처리
-	         	$.ajax({
-		 			url : "${pageContext.request.contextPath}/page",
-		 			type : "POST",
-		 			dataType : "json",
-		 			data : {
-		 				act : "schedule"
-		 			},
-		 			success : function(response) {
-		 				if(response.success){
-		 					//성공
-		                        location.href = "${pageContext.request.contextPath}/page?act=userSchedule";
-		 				}else {
-		 					//실패
-		 					alert("로그인 후 이용해주세요");
-		 				}
-					},
-		 			error : function(xhr, status, error) {
-		 				console.error("AJAX Error - Status: " + status
-		 						+ ", Error: " + error);
-		 				console.error("Response Text: " + xhr.responseText);
-		 			}
-		 		}); 
+
+		$("#contactAdmin").click(function(event){
+
+			$("#modalPopup2").css('display', 'table').fadeIn(function() {
+				document.getElementsByName("uid")[0].focus();
+			});
+			disableScroll();
+			event.stopPropagation();  
+			
 	     	});
+
 		
 		$(".closeMod").click(function() {
 			if(document.body.style.overflow == 'hidden'){
@@ -214,12 +247,15 @@
 		document.querySelector('#menuBar').style.borderBottomRightRadius = '50px';
 	}
 	function openMenu(){
-		if(document.querySelector('#dropdown').style.display==='none'){
-			document.querySelector('#dropdown').style.display='inline-block';
-			document.querySelector('#menuBar').style.borderBottomRightRadius = '0px';
-		} else {
-			document.querySelector("#dropdown").style.display='none';
-			document.querySelector('#menuBar').style.borderBottomRightRadius = '50px';
+		if(<%=userSession != null%>){
+
+			if(document.querySelector('#dropdown').style.display==='none'){
+				document.querySelector('#dropdown').style.display='inline-block';
+				document.querySelector('#menuBar').style.borderBottomRightRadius = '0px';
+			} else {
+				document.querySelector("#dropdown").style.display='none';
+				document.querySelector('#menuBar').style.borderBottomRightRadius = '50px';
+			}	
 		}
 	}
 	

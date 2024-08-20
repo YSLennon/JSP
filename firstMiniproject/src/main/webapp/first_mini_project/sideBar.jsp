@@ -32,7 +32,7 @@ if(userSession != null){
             <div id="latestActivity">
                 latestActivity
             </div>
-            <a href="${pageContext.request.contextPath}/page?act=makeBoard" id="viewMyHistory">
+            <a href="javascript:;" onclick="toMakeBoard(event)" id="viewMyHistory">
                 모임 만들러가기
             </a>
         </div>
@@ -45,26 +45,6 @@ if(userSession != null){
         </div>
 
         <div id="history">
-           <!--  <div class="historyBlock">
-                <div id="historyArea">historyTitle</div>
-                <div id="historyDistance"> 100km</div>
-                <div id="eventDate"> 2024.05.06 13:00</div>
-            </div>
-            <div class="historyBlock">
-                <div id="historyArea">historyTitle</div>
-                <div id="historyDistance"> 100km</div>
-                <div id="eventDate"> 2024.05.06 13:00</div>
-            </div>
-            <div class="historyBlock">
-                <div id="historyArea">historyTitle</div>
-                <div id="historyDistance"> 100km</div>
-                <div id="eventDate"> 2024.05.06 13:00</div>
-            </div>
-            <div class="historyBlock">
-                <div id="historyArea">historyTitle</div>
-                <div id="historyDistance"> 100km</div>
-                <div id="eventDate"> 2024.05.06 13:00</div>
-            </div> -->
         </div>
         <div id="trip">
             trip
@@ -75,7 +55,18 @@ if(userSession != null){
         </div>
     </aside>
     <script>
-    
+    function toMakeBoard(event){
+    	if(<%=sessionAuth%>){
+    		location.href="${pageContext.request.contextPath}/page?act=makeBoard";	
+    	} else{
+	    		$("#modalPopup").css('display', 'table').hide().fadeIn(function() {
+					document.getElementsByName("uid")[0].focus();
+				});
+				disableScroll();
+				event.stopPropagation();  
+			}
+    	
+    }
 	function showHistory(sideTag){
 			$.ajax({
 	 			url : "${pageContext.request.contextPath}/board",
