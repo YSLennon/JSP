@@ -89,7 +89,7 @@
 }
 		
 		function requestAjaxMessage(checkValue, act, message){
-			confirmFlg = false;
+
 			$.ajax({
 				url : "${pageContext.request.contextPath}/user",
 				type : "POST",

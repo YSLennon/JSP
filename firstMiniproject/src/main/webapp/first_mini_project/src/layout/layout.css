@@ -20,17 +20,17 @@ html, body {
 
 /* header */
 #headLine {
-	position: fixed;
-	top: 0px;
-	left: 0px;
-	width: 100%;
-	background-color: black;
-	color: white;
-	font-weight: bold;
-	font-size: 20px;
-	height: 30px;
-	line-height: 30px;
-	z-index: 999;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: black;
+    color: white;
+    font-size: 13px;
+    height: 30px;
+    line-height: 30px;
+    z-index: 999;
+    padding-left: 30px;
 }
 
 header {
@@ -98,7 +98,7 @@ header {
 #dropdown{
     position: absolute;
     display:none;
-    right: -1%;
+    right: -0.5%;
     bottom: -70%;
     height: 70%;
 	box-sizing: border-box;
@@ -175,8 +175,15 @@ header {
 	text-shadow: 1px 1px 1px gray;
 }
 #viewMyHistory {
-	color: #abcdef;
-	line-height: 10px;
+	
+    border: 1px solid #EEE;
+    background-color: #abcdef;
+    line-height: 10px;
+    width: 200px;
+    border-radius: 20px;
+    display: inline-block;
+    padding: 10px 10px;
+    color: #eee;
 }
 
 .sideTagZone {
@@ -461,7 +468,8 @@ button:active {
 	width: 90%;
 	height: 5%;
 	font-weight: bold;
-	font-size: 200%;
+	font-size: 170%;
+	padding-left: 15px;
 }
 #modifyBoard{
     position: relative;
@@ -479,7 +487,11 @@ button:active {
 .clickable{
 	display: none;
 }
-.clickable:active{
+.clickable:active {
+	box-shadow: 1px 1px 1px gray;
+	opacity:0.7;
+}
+.clickable2:active {
 	box-shadow: 1px 1px 1px gray;
 	opacity:0.7;
 }
@@ -523,7 +535,7 @@ button:active {
 	width: 90%;
 	height: 30vh;
 	background-color: aliceblue;
-	margin: 0px auto;
+	margin: 5% auto;
 	border-radius: 10px;
 }
 
@@ -655,12 +667,23 @@ button:active {
 	float: right;
 }
 
-#tagZone {
+.tagZone {
 	clear: both;
 	position:relative;
 	height: 7vh;
 }
-
+#startPoint{
+	left:5%;
+	width:15%;
+}
+#makeCourse{
+	left:21%;
+	width:20%;
+}
+#removeCourse{
+	left: 42%;
+	width:20%;
+}
 .tagBlock {
 	border: 1px solid black;
 	border-radius: 20px;
@@ -737,6 +760,60 @@ option {
 	bottom: 10px;
 	height: 25px;
 }
+/* makeBoard */
+.txtAreaBlock{
+	height:60%;
+}
+#contentsArea{
+	box-sizing:border-box;
+	padding:2%;
+    width: 100%;
+    height: 100%;
+    margin: 0px auto;
+    border-radius: 10px;
+}
+.relative{
+	position:relative;
+}
+.bottomMenu{
+    
+    position: absolute;
+    bottom: 30%;
+    font-weight: bold;
+    opacity: 0.9;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: fit-content;
+    line-height: 50%;
+    background-color: #eee;
+    color: black;
+    font-size: 80%;
+    display: inline-block;
+    margin-top: 20px;
+    text-align: center;
+    height: 50%;
+
+}
+#catSelect{
+	left:0%;
+	opacity:0.7;
+}
+#addrInput{
+	left:13%;
+	width:10%;
+}
+#distanceInput{
+	left:24%;
+	width:17%;
+}
+#dateSelect{
+    left: 42%;
+    width: 40%;	
+}
+.submitBtn{
+	right:0%;
+}
+
 
 /* footer */
 footer {
@@ -751,24 +828,6 @@ footer {
 	height: 20vh;
 }
 
-.curved {
-	/* border: 1px solid black; */
-	border-radius: 10px;
-}
-
-.themeBtn {
-	width: 80px;
-	height: 30px;
-	display: inline-block;
-	float: right;
-	bottom: 20px;
-	background-color: #eee;
-}
-
-.themeBtn:hover {
-	opacity: 0.7;
-	box-shadow: 1px 1px 1px;
-}
 
 @media screen and (min-width:1024px) {
 	#sideBar {

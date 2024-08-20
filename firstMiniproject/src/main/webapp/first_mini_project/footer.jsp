@@ -5,13 +5,13 @@
 <head>
 </head>
 <body>
-    <footer>
-        <div>맞아요</div>
-        <div>제가 바로</div>
-        <div>푸터에요</div>
-        <div>이게 무슨 소리인지는 묻지 마세요</div>
-        <div>@copyright: lorem ipsum</div>
-    </footer>
-    
+	<footer>
+		<div>StrideCycle © 2024. All Rights Reserved.</div>
+		<div>건강한 삶을 위한 첫 걸음, StrideCycle에서 시작하세요.</div>
+		<div>함께 하는 모든 순간이 더 특별해지는 곳, StrideCycle에서 만나세요.</div>
+		<div>문의: contact@stridecycle.com</div>
+		
+	</footer>
+
 </body>
 </html>

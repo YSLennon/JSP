@@ -124,6 +124,9 @@ public class UserController extends HttpServlet {
 					Gson gson = new Gson();
 					User user = gson.fromJson(jsonData, User.class);
 					userDAO.changeUser(user);
+					String sql = "select * from tbl_user where uid = "+str(user.getUid());
+					
+					user = userDAO.searchUser(sql).get(0);
 					user = new User(user.getUid(),user.getNickName(), user.getFavor(), user.getAuthority(), user.getUdatetime());
 					session.setAttribute("userSession", user);
 					

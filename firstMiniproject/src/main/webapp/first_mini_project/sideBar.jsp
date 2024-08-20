@@ -32,8 +32,8 @@ if(userSession != null){
             <div id="latestActivity">
                 latestActivity
             </div>
-            <a onclick="clickCycle" href="javascript:;" id="viewMyHistory">
-                모임 만들러가기 블록잡아주기!
+            <a href="${pageContext.request.contextPath}/page?act=makeBoard" id="viewMyHistory">
+                모임 만들러가기
             </a>
         </div>
 

@@ -64,10 +64,13 @@ public class LocationController extends HttpServlet {
 				} else if (act.equals("detailViewer")) {
 					RequestDispatcher dispatcher = request.getRequestDispatcher("first_mini_project/detailViewer.jsp");
 					dispatcher.forward(request, response);
-				} else if (act.equals("detailViewer")) {
-					RequestDispatcher dispatcher = request.getRequestDispatcher("first_mini_project/detailViewer.jsp");
+				} else if (act.equals("makeBoard")) {
+					RequestDispatcher dispatcher = request.getRequestDispatcher("first_mini_project/makeBoard.jsp");
 					dispatcher.forward(request, response);
-				}
+				} else if (act.equals("modify")) {
+					RequestDispatcher dispatcher = request.getRequestDispatcher("first_mini_project/modifyBoard.jsp");
+					dispatcher.forward(request, response);
+				} 
 						
 
 			} catch (Exception e) {
@@ -96,7 +99,10 @@ public class LocationController extends HttpServlet {
 							
 							out.print("{\"success\": "+successSession+"}");
 							out.flush();
-					}
+					} else if (act.equals("main")) {
+						RequestDispatcher dispatcher = request.getRequestDispatcher("first_mini_project/intro.jsp");
+						dispatcher.forward(request, response);
+					} 
 				
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -11,11 +11,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
 import dao.BoardDAO;
-import dao.UserDAO;
 import model.Board;
 import model.User;
 
@@ -35,7 +35,7 @@ public class BoardController extends HttpServlet {
 		final AsyncContext asyncContext = request.startAsync();
 		asyncContext.start(() ->{
 			try {
-//				HttpSession session = request.getSession();
+
 				String category = str((request.getParameter("category") ==null || request.getParameter("category").equals("A"))?"%":request.getParameter("category"));
 				if(act.equals("searchGroup")) {
 					List<Board> list = boardDAO.listAllBoards(category);
@@ -126,9 +126,9 @@ public class BoardController extends HttpServlet {
 				} else if(act.equals("removeBoard")) {
 					String boardNo = request.getParameter("boardNo");
 					String sql = "DELETE FROM tbl_board WHERE boardNo="+ boardNo;
-					boardDAO.removeBoard(sql);
+					boardDAO.updateBoard(sql);
 					sql = "DELETE FROM tbl_enroll WHERE boardNo="+ boardNo;
-					boardDAO.removeBoard(sql);
+					boardDAO.updateBoard(sql);
 					
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
@@ -136,6 +136,65 @@ public class BoardController extends HttpServlet {
 				PrintWriter out = response.getWriter();
 				out.print("{\"message\": \"삭제되었습니다.\"}");
 				out.flush();	
+				} else if(act.equals("makeBoard")) {
+					HttpSession session = request.getSession();
+					User userSession = (User) session.getAttribute("userSession");
+					String organizer = userSession.getUid();
+					String title = request.getParameter("title");
+					String contents = request.getParameter("contents");
+					String boardCategory = request.getParameter("category");
+					String distance = request.getParameter("distance");
+					String addr = request.getParameter("addr");
+					String map = request.getParameter("map");
+					String datetime= request.getParameter("datetime");
+					String sql = "INSERT INTO tbl_board (organizer, title, contents, category, distance, addr, map, datetime) VALUES ('"+organizer+"', '"+title+"', '"+contents+"', '"+boardCategory+"', "+distance+", '"+addr+"', '"+map+"', STR_TO_DATE('"+datetime+"', '%Y-%m%Y-%m-%d %H:%i%d %H:%i'))";
+					
+
+					boardDAO.updateBoard(sql);
+					
+					sql = "INSERT INTO tbl_enroll (boardNo, uid) SELECT b.boardNo, organizer AS uid FROM tbl_board b left JOIN tbl_enroll e  ON b.organizer = e.uid && b.boardNo = e.boardNo WHERE organizer = '"+organizer+"' AND uid IS null";
+					
+					boardDAO.updateBoard(sql);
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					
+					PrintWriter out = response.getWriter();
+					out.print("{\"message\": \"작성되었습니다.\"}");
+					out.flush();	
+				} else if(act.equals("modifyBoard")){
+					
+					HttpSession session = request.getSession();
+					User userSession = (User) session.getAttribute("userSession");
+					String organizer = userSession.getUid();
+					String title = request.getParameter("title");
+					String contents = request.getParameter("contents");
+					String boardCategory = request.getParameter("category");
+					String distance = request.getParameter("distance");
+					String addr = request.getParameter("addr");
+					String map = request.getParameter("map");
+					String datetime = request.getParameter("datetime");
+					String boardNo = request.getParameter("boardNo");
+					String sql = "UPDATE tbl_board SET organizer = '"+organizer+"', title = '"+title+"', contents = '"+contents+"', category = '"+boardCategory+"', DISTANCE = "+distance+", addr = '"+addr+"', map = '"+map+"', DATETIME = STR_TO_DATE('"+datetime+"', '%Y-%m-%d %H:%i') WHERE boardNo = "+boardNo;
+					System.out.println(sql);
+
+					boardDAO.updateBoard(sql);
+					
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					
+					PrintWriter out = response.getWriter();
+					out.print("{\"message\": \"수정되었습니다.\"}");
+					out.flush();	
+				} else if (act.equals("changeStatus")) {
+					String sql = "update tbl_board set status = 'completed' where boardNo = "+request.getParameter("boardNo");
+					boardDAO.updateBoard(sql);
+
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					
+					PrintWriter out = response.getWriter();
+					out.print("{\"message\": \"완료처리되었습니다.\"}");
+					out.flush();	
 				}
 				
 			} catch (Exception e) {

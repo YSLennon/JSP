@@ -16,7 +16,6 @@ public class BoardDAO extends MainDAO {
 		List<Board> boardList = new ArrayList<>();
 
 		String sql = "SELECT boardNo, title, addr, status, category, substr(DATETIME, 1, LENGTH(DATETIME)-3) as datetime FROM tbl_board where category like "+ catRequest + " ORDER BY DATETIME desc";
-		System.out.println(sql);
 		
 		connect();
 
@@ -76,9 +75,7 @@ public class BoardDAO extends MainDAO {
 		List<Board> boardList = new ArrayList<>();
 
 		String sql =  	"SELECT title, distance, substr(DATETIME, 1, LENGTH(DATETIME)-3) AS datetime FROM tbl_board b INNER JOIN tbl_enroll e ON b.boardNo = e.boardNo where category LIKE "+catRequest+" and uid = "+uid+" ORDER BY DATETIME desc";
-		
-		System.out.println(sql);
-		
+				
 		connect();
 
 		Statement statement = jdbcConnection.createStatement();
@@ -102,7 +99,6 @@ public class BoardDAO extends MainDAO {
 
 		String sql = "SELECT SUM(distance) as trip FROM tbl_board b INNER JOIN tbl_enroll e ON b.boardNo = e.boardNo where uid = "+uid+" GROUP BY uid ";  
 		
-		System.out.println(sql);
 		
 		connect();
 
@@ -125,15 +121,13 @@ public class BoardDAO extends MainDAO {
 	public HashMap<String, Object> getDetailBoard(String boardNumb) throws SQLException {
 		List<Board> boardList = new ArrayList<>();
 		List<String> uidList = new ArrayList<>();
-		String sql ="SELECT b.boardNo, organizer, title, contents, DISTANCE, b.addr, STATUS, category, SUBSTR(DATETIME,1,LENGTH(DATETIME)-3) AS DATETIME, SUBSTR(b.cdatetime,1,LENGTH(b.cdatetime)-3) AS cdatetime, nickName FROM tbl_board b INNER JOIN tbl_enroll e ON b.boardNo = e.boardNo INNER JOIN tbl_user u ON u.uid = e.uid WHERE b.boardNo = "+boardNumb;
-		
-		System.out.println(sql);
-		
+		String sql ="SELECT b.boardNo, organizer, title, contents, DISTANCE, b.addr, STATUS, map, category, SUBSTR(DATETIME,1,LENGTH(DATETIME)-3) AS DATETIME, SUBSTR(b.cdatetime,1,LENGTH(b.cdatetime)-3) AS cdatetime, nickName FROM tbl_board b INNER JOIN tbl_enroll e ON b.boardNo = e.boardNo INNER JOIN tbl_user u ON u.uid = e.uid WHERE b.boardNo = "+boardNumb;
+				
 		connect();
 
 		Statement statement = jdbcConnection.createStatement();
 		ResultSet rs = statement.executeQuery(sql);
-		
+
 		while (rs.next()) {
 			 	int boardNo = rs.getInt("boardNo");
 			    String organizer = rs.getString("organizer");
@@ -143,9 +137,10 @@ public class BoardDAO extends MainDAO {
 			    String addr = rs.getString("addr");
 			    String status = rs.getString("status");
 			    String category = rs.getString("category");
+			    String map = rs.getString("map");
 			    String datetime = rs.getString("datetime");
 			    String cdatetime = rs.getString("cdatetime");			    
-			    Board board = new Board(boardNo, organizer, title, contents, distance, addr, status, category, datetime, cdatetime);
+			    Board board = new Board(boardNo, organizer, title, contents, distance, addr, status, category, map, datetime, cdatetime);
 			    boardList.add(board);
 			    uidList.add(rs.getString("nickName"));
 		}
@@ -161,7 +156,7 @@ public class BoardDAO extends MainDAO {
 
 		return map;
 	}
-	public void removeBoard(String sql) throws SQLException {
+	public void updateBoard(String sql) throws SQLException {
 
 		connect();
 

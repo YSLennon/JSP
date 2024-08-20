@@ -29,10 +29,10 @@
 	}
 	%>
 
-	<div id="headLine">hi</div>
+	<div id="headLine">함께 달리고, 함께 사이클링을 즐기세요.</div>
 	<header>
 		<div id="menuBar">
-			<div id="dropdown">
+			<div id="dropdown" style="display:none;">
 				<a href="${pageContext.request.contextPath}/page?act=clientInfo"><div>회원정보 수정</div></a>
 			</div>
 			<div id="webTitle">
@@ -107,7 +107,7 @@
 	 				        modalClose();
 	 				        enableScroll();
  		                    setTimeout(function() {
- 		                    location.href = "${pageContext.request.contextPath}/page";	
+ 		                    location.href = "${pageContext.request.contextPath}/page?act=searchGroup";	
  		                    
  		                    }, 500); // 모달 닫힌 후 페이지 이동					
 		                    }

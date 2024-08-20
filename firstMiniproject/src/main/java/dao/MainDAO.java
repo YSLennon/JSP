@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MainDAO {
-	private String jdbcURL = "jdbc:mysql://localhost:3306/stridecycle?&useSSL=false";
+	private String jdbcURL = "jdbc:mysql://localhost:3306/stridecycle?useSSL=false&allowPublicKeyRetrieval=true";	
     private String jdbcUsername = "root";
     private String jdbcPassword = "test1234";
     protected Connection jdbcConnection;

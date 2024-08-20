@@ -105,8 +105,18 @@
 	
 function appendList(data){
 		var container = document.getElementById("listContainer");
-		
 		container.innerHTML = '';
+
+		if(data.length ==0){
+			const listItem = document.createElement('div');
+			listItem.className = 'listBlock';
+			listItem.innerHTML = `
+							<div style="display:inline-block ; margin: 20px auto;" >아무 기록이 없습니다.</span>
+			`;
+			container.appendChild(listItem);
+		}
+
+		
 		
 		data.forEach(item => {
 			const isLogin = (item.uid != null);
@@ -117,10 +127,9 @@ function appendList(data){
 			listItem.innerHTML = `
 	            <a id="title" class="listTitle" href="${pageContext.request.contextPath}/page?act=detailViewer&boardNo=`+item.boardNo+`">`+item.title+`</a>
 	            <div id="datetime" class="listDatetime">`+item.datetime+`</div>
-	            <div id="tagZone">
+	            <div id="tagZone" style="margin-top:10%"">
 	                <div id="category" class="tagBlock">`+category+`</div>
 	                <div id="addr" class="tagBlock">`+item.addr+`</div>
-	                <div id="member" class="tagBlock">`+item.member+`</div>
 	                <div id="boardStatus" class="tagBlock listStatus">`+status+`</div>
 	            </div>
 			`;

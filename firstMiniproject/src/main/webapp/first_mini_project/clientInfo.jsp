@@ -240,7 +240,7 @@
 					alert("회원 정보가 변경되었습니다.");
 
 					form.action = "${pageContext.request.contextPath}/page?act=main";
-					form.method = "get";
+					form.method = "post";
 					form.submit(); 
 				},
 				error : function(xhr, status, error) {
