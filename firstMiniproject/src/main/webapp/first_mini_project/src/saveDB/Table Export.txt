@@ -1,0 +1,67 @@
+-- --------------------------------------------------------
+-- 호스트:                          127.0.0.1
+-- 서버 버전:                        8.0.39 - MySQL Community Server - GPL
+-- 서버 OS:                        Win64
+-- HeidiSQL 버전:                  12.8.0.6908
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- stridecycle 데이터베이스 구조 내보내기
+CREATE DATABASE IF NOT EXISTS `stridecycle` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `stridecycle`;
+
+-- 테이블 stridecycle.tbl_board 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_board` (
+  `boardNo` int NOT NULL AUTO_INCREMENT,
+  `organizer` varchar(50) DEFAULT NULL,  --해당 보드를 만든 유저
+  `title` varchar(255) NOT NULL,  -- 카테고리에 따라서 category ==C 이면 자전거 라이딩 모임 홍보타이틀 or category == R이면 런닝 모임 홍보 타이틀
+  `contents` text,	-- 타이틀과 관련된 홍보문구
+  `distance` int DEFAULT NULL,	--달리기의 경우 5km에서 20km사이로, 자전거의 경우 20km에서 150km 사이로
+  `addr` varchar(50) DEFAULT NULL,	-- 한국의 주소로 하고 한글로 '옥련동' 처럼 동 이름만 입력
+  `status` varchar(50) DEFAULT 'recruitment',	 	-- recruitment와 completed를 섞어줘
+  `category` varchar(1) DEFAULT 'C',		-- C, R 둘중에 하나로 해줘 C는 자전거, R은 달리기야
+  `map` json DEFAULT NULL,		--이건 비워도 괜찮아
+  `datetime` datetime DEFAULT NULL,	-- 이건 해당 모임 일정이야 cdatetime보단 늦어야하고 오전 10시에서 20시 사이로 잡아줘
+  `cdatetime` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`boardNo`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- 테이블 stridecycle.tbl_enroll 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_enroll` ( -- tbl_user에 속한 유저들이 tbl_board에 있는 모임에 참여한 것을 알려주는 테이블이야
+  `uid` varchar(50) DEFAULT NULL,	-- tbl_user의 uid를 사용하면 되는데 tbl_board테이블에서 organizer에 속한 유저는 꼭 있어야해
+  `boardNo` int DEFAULT NULL	-- 이건 그냥 tbl_board에 있는 값이면 돼
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- 테이블 stridecycle.tbl_user 구조 내보내기
+CREATE TABLE IF NOT EXISTS `tbl_user` ( -- 관리자 계정은 하나만 만들거야
+  `uid` varchar(50) NOT NULL,	--관리자는 admin, 유저는 user01부터 user10까지 만들어줘
+  `pwd` varchar(255) NOT NULL,	--관리자는 admin1234, 유저는 user1234로 통일해줘
+  `cnt` int DEFAULT '0',			-- cnt는 관리자는 0, 유저는 0, 5, -2를 섞어줘 user01은 0이야
+  `name` varchar(50) DEFAULT NULL,	--한국식 이름으로 해서 정해줘
+  `phone` varchar(50) DEFAULT NULL,	-- user01은 010-1234-1234로해줘
+  `addr` varchar(255) DEFAULT NULL,	-- 한국의 주소로 하고 한글로 '옥련동' 처럼 동 이름만 입력
+  `nickName` varchar(50) DEFAULT NULL,		--닉네임은 적당히 지어줘 이름 두글자로 정해도 돼
+  `favor` char(1) DEFAULT 'A',			--A,C,R에서 섞어서 자유롭게 해줘
+  `authority` char(1) DEFAULT 'C',		--관리자만 A, 나머지는 C로해줘
+  `cdatetime` datetime DEFAULT CURRENT_TIMESTAMP,	
+  `udatetime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

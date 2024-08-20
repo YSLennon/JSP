@@ -1,0 +1,185 @@
+-- 자전거 보드 (category = C)
+INSERT INTO tbl_board (organizer, title, contents, distance, addr, status, category, datetime)
+VALUES
+('user01', '자전거 타기 모임 모집', '자전거를 타며 건강을 챙기는 모임입니다.', 30, '옥련동', 'recruitment', 'C', '2024-08-20 10:00:00'),
+('user02', '주말 자전거 라이딩', '주말에 함께 자전거를 타며 힐링하는 모임입니다.', 25, '해운대동', 'completed', 'C', '2024-08-21 11:00:00'),
+('user03', '자전거 산행', '산과 강을 배경으로 자전거를 즐기는 모임입니다.', 50, '남구', 'recruitment', 'C', '2024-08-22 12:00:00'),
+('user04', '자전거 여행', '장거리 자전거 여행을 함께 할 모임입니다.', 75, '광안동', 'completed', 'C', '2024-08-23 13:00:00'),
+('user05', '도심 자전거 투어', '도심 속 자전거 투어를 즐기는 모임입니다.', 40, '동래동', 'recruitment', 'C', '2024-08-24 14:00:00'),
+('user06', '자전거 캠핑', '자전거와 함께 캠핑을 즐기는 모임입니다.', 60, '부산진구', 'completed', 'C', '2024-08-25 15:00:00'),
+('user07', '자전거 드라이브', '자전거를 타고 드라이브하는 모임입니다.', 85, '사상구', 'recruitment', 'C', '2024-08-26 16:00:00'),
+('user08', '자전거 레이싱', '자전거 레이싱을 위한 모임입니다.', 100, '연산동', 'completed', 'C', '2024-08-27 17:00:00');
+
+-- 달리기 보드 (category = R)
+INSERT INTO tbl_board (organizer, title, contents, distance, addr, status, category, datetime)
+VALUES
+('user01', '해운대 달리기 모임', '해운대에서 함께 달리는 모임입니다.', 5, '해운대동', 'recruitment', 'R', '2024-08-20 08:00:00'),
+('user02', '도심 달리기', '도심을 함께 달리는 모임입니다.', 8, '서면동', 'completed', 'R', '2024-08-21 09:00:00'),
+('user03', '해안 달리기', '해안을 따라 달리면서 즐거운 시간을 가지는 모임입니다.', 10, '광안동', 'recruitment', 'R', '2024-08-22 10:00:00'),
+('user04', '산속 달리기', '산속을 달리며 건강을 챙기는 모임입니다.', 12, '금정구', 'completed', 'R', '2024-08-23 11:00:00'),
+('user05', '마라톤 훈련', '마라톤을 위한 훈련 모임입니다.', 15, '해운대동', 'recruitment', 'R', '2024-08-24 12:00:00'),
+('user06', '야경 달리기', '야경을 보면서 달리는 모임입니다.', 20, '부산진구', 'completed', 'R', '2024-08-25 13:00:00'),
+('user07', '풀코스 달리기', '풀코스를 달리며 체력을 기르는 모임입니다.', 25, '사상구', 'recruitment', 'R', '2024-08-26 14:00:00'),
+('user08', '해변 달리기', '해변을 따라 달리는 모임입니다.', 18, '연산동', 'completed', 'R', '2024-08-27 15:00:00');
+
+INSERT INTO tbl_user (uid, pwd, cnt, name, phone, addr, nickName, favor, authority)
+VALUES
+('admin', 'admin1234', 0, '관리자', '010-9999-9999', '구서동', '관리자', 'C', 'A'),  -- 관리자
+
+('user01', 'user1234', 0, '이민수', '010-1234-1234', '옥련동', '민수', 'C', 'C'),
+('user02', 'user1234', 5, '김지수', '010-2345-6789', '해운대동', '지수', 'R', 'C'),
+('user03', 'user1234', -2, '박진우', '010-3456-7890', '남구', '진우', 'C', 'C'),
+('user04', 'user1234', 0, '최현정', '010-4567-8901', '광안동', '현정', 'R', 'C'),
+('user05', 'user1234', 5, '장수진', '010-5678-9012', '동래동', '수진', 'C', 'C'),
+('user06', 'user1234', -2, '홍길동', '010-6789-0123', '부산진구', '길동', 'R', 'C'),
+('user07', 'user1234', 5, '김영희', '010-7890-1234', '사상구', '영희', 'C', 'C'),
+('user08', 'user1234', -2, '이상호', '010-8901-2345', '연산동', '상호', 'R', 'C'),
+('user09', 'user1234', 0, '박영철', '010-9012-3456', '해운대동', '영철', 'C', 'C'),
+('user10', 'user1234', 5, '김미영', '010-0123-4567', '서면동', '미영', 'R', 'C');
+
+-- 유저 가입 정보
+INSERT INTO tbl_enroll (uid, boardNo) VALUES
+('user01', 1),
+('user01', 2),
+('user01', 3),
+('user01', 4),
+('user01', 5),
+('user01', 6),
+('user01', 7),
+('user01', 8),
+('user02', 1),
+('user02', 2),
+('user02', 3),
+('user02', 4),
+('user02', 5),
+('user02', 6),
+('user02', 7),
+('user02', 8),
+('user03', 1),
+('user03', 2),
+('user03', 3),
+('user03', 4),
+('user03', 5),
+('user03', 6),
+('user03', 7),
+('user03', 8),
+('user04', 1),
+('user04', 2),
+('user04', 3),
+('user04', 4),
+('user04', 5),
+('user04', 6),
+('user04', 7),
+('user04', 8),
+('user05', 1),
+('user05', 2),
+('user05', 3),
+('user05', 4),
+('user05', 5),
+('user05', 6),
+('user05', 7),
+('user05', 8),
+('user06', 1),
+('user06', 2),
+('user06', 3),
+('user06', 4),
+('user06', 5),
+('user06', 6),
+('user06', 7),
+('user06', 8),
+('user07', 1),
+('user07', 2),
+('user07', 3),
+('user07', 4),
+('user07', 5),
+('user07', 6),
+('user07', 7),
+('user07', 8),
+('user08', 1),
+('user08', 2),
+('user08', 3),
+('user08', 4),
+('user08', 5),
+('user08', 6),
+('user08', 7),
+('user08', 8),
+('user09', 1),
+('user09', 2),
+('user09', 3),
+('user09', 4),
+('user09', 5),
+('user09', 6),
+('user09', 7),
+('user09', 8),
+('user10', 1),
+('user10', 2),
+('user10', 3),
+('user10', 4),
+('user10', 5),
+('user10', 6),
+('user10', 7),
+('user10', 8);
+
+INSERT INTO tbl_enroll (uid, boardNo) VALUES
+('user01', 9),
+('user02', 9),
+('user03', 9),
+('user04', 9),
+('user05', 9),
+('user06', 9);
+
+INSERT INTO tbl_enroll (uid, boardNo) VALUES
+('user01', 10),
+('user02', 10),
+('user03', 10),
+('user07', 10),
+('user08', 10),
+('user09', 10);
+
+INSERT INTO tbl_enroll (uid, boardNo) VALUES
+('user04', 11),
+('user05', 11),
+('user06', 11),
+('user07', 11),
+('user08', 11),
+('user10', 11);
+
+INSERT INTO tbl_enroll (uid, boardNo) VALUES
+('user02', 12),
+('user03', 12),
+('user06', 12),
+('user07', 12),
+('user08', 12),
+('user10', 12);
+
+INSERT INTO tbl_enroll (uid, boardNo) VALUES
+('user01', 13),
+('user04', 13),
+('user05', 13),
+('user06', 13),
+('user09', 13),
+('user10', 13);
+
+INSERT INTO tbl_enroll (uid, boardNo) VALUES
+('user02', 14),
+('user03', 14),
+('user05', 14),
+('user06', 14),
+('user08', 14),
+('user09', 14);
+
+INSERT INTO tbl_enroll (uid, boardNo) VALUES
+('user01', 15),
+('user03', 15),
+('user05', 15),
+('user06', 15),
+('user08', 15),
+('user10', 15);
+
+INSERT INTO tbl_enroll (uid, boardNo) VALUES
+('user02', 16),
+('user04', 16),
+('user07', 16),
+('user08', 16),
+('user09', 16),
+('user10', 16);
