@@ -11,12 +11,13 @@ public class Board {
 	    private String status;
 	    private String category;
 	    private String map;
+	    private String mapCenter;
 	    private String datetime;
 	    private String cdatetime;
 
 
 	    // Constructor
-	    public Board(int boardNo, String organizer, String title, String contents, int distance, String addr, String status, String category, String map, String datetime, String cdatetime) {
+	    public Board(int boardNo, String organizer, String title, String contents, int distance, String addr, String status, String category, String map, String mapCenter, String datetime, String cdatetime) {
 	        this.boardNo = boardNo;
 	        this.organizer = organizer;
 	        this.title = title;
@@ -26,6 +27,7 @@ public class Board {
 	        this.status = status;
 	        this.category = category;
 	        this.map = map;
+	        this.mapCenter = mapCenter;
 	        this.datetime = datetime;
 	        this.cdatetime = cdatetime;
 	    }
@@ -134,6 +136,14 @@ public class Board {
 
 		public void setMap(String map) {
 			this.map = map;
+		}
+
+		public String getMapCenter() {
+			return mapCenter;
+		}
+
+		public void setMapCenter(String mapCenter) {
+			this.mapCenter = mapCenter;
 		}
 
 		public String getDatetime() {

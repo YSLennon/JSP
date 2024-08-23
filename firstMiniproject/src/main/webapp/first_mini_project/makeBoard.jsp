@@ -58,7 +58,7 @@
 
 
 	var manager;
-
+	var mapCenter;
 function makeMap(addr){
 	var geocoder = new kakao.maps.services.Geocoder();
 
@@ -77,7 +77,7 @@ function makeMap(addr){
 
 	    	// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 	    	var drawingMap = new kakao.maps.Map(drawingMapContainer, drawingMap); 
-
+				mapCenter = drawingMap.getCenter();
 	    	var options = { // Drawing Manager를 생성할 때 사용할 옵션입니다
 	    	    map: drawingMap, // Drawing Manager로 그리기 요소를 그릴 map 객체입니다
 	    	    drawingMode: [ // Drawing Manager로 제공할 그리기 요소 모드입니다
@@ -138,10 +138,12 @@ function selectOverlay(type) {
 	
 	function fnMakeBoard(){
 		var mapData = manager.getData();
+		
 		requestAjaxMessage('makeBoard',mapData);
 	}
-	
-	function requestAjaxMessage(act, mapData){
+
+	function requestAjaxMessage(act, mapData){	
+
 		$.ajax({
 			url : "${pageContext.request.contextPath}/board",
 			type : "POST",
@@ -151,6 +153,7 @@ function selectOverlay(type) {
 				act : act,
 			    title : form.title.value, 
 			    map : JSON.stringify(mapData), 
+			    mapCenter : JSON.stringify(mapCenter),
 			    contents : form.contents.value, 
 			    category : form.category.value,
 			    distance : form.distance.value,

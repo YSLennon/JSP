@@ -121,7 +121,7 @@ public class BoardDAO extends MainDAO {
 	public HashMap<String, Object> getDetailBoard(String boardNumb) throws SQLException {
 		List<Board> boardList = new ArrayList<>();
 		List<String> uidList = new ArrayList<>();
-		String sql ="SELECT b.boardNo, organizer, title, contents, DISTANCE, b.addr, STATUS, map, category, SUBSTR(DATETIME,1,LENGTH(DATETIME)-3) AS DATETIME, SUBSTR(b.cdatetime,1,LENGTH(b.cdatetime)-3) AS cdatetime, nickName FROM tbl_board b INNER JOIN tbl_enroll e ON b.boardNo = e.boardNo INNER JOIN tbl_user u ON u.uid = e.uid WHERE b.boardNo = "+boardNumb;
+		String sql ="SELECT b.boardNo, organizer, title, contents, DISTANCE, b.addr, STATUS, map, mapCenter, category, SUBSTR(DATETIME,1,LENGTH(DATETIME)-3) AS DATETIME, SUBSTR(b.cdatetime,1,LENGTH(b.cdatetime)-3) AS cdatetime, nickName FROM tbl_board b INNER JOIN tbl_enroll e ON b.boardNo = e.boardNo INNER JOIN tbl_user u ON u.uid = e.uid WHERE b.boardNo = "+boardNumb;
 				System.out.println(sql);
 		connect();
 
@@ -138,9 +138,10 @@ public class BoardDAO extends MainDAO {
 			    String status = rs.getString("status");
 			    String category = rs.getString("category");
 			    String map = rs.getString("map");
+			    String mapCenter = rs.getString("mapCenter");
 			    String datetime = rs.getString("datetime");
 			    String cdatetime = rs.getString("cdatetime");			    
-			    Board board = new Board(boardNo, organizer, title, contents, distance, addr, status, category, map, datetime, cdatetime);
+			    Board board = new Board(boardNo, organizer, title, contents, distance, addr, status, category, map, mapCenter,  datetime, cdatetime);
 			    boardList.add(board);
 			    uidList.add(rs.getString("nickName"));
 		}

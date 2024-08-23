@@ -120,7 +120,10 @@ public class BoardController extends HttpServlet {
 					
 					response.setContentType("application/json");
 					response.setCharacterEncoding("UTF-8");
+					List<Board> a = ((List<Board>)map.get("boardList"));
 					
+					System.out.println(a.get(0).getMapCenter());
+
 					PrintWriter out = response.getWriter();
 					out.print(json);
 					out.flush();	
@@ -147,8 +150,9 @@ public class BoardController extends HttpServlet {
 					String distance = request.getParameter("distance");
 					String addr = request.getParameter("addr");
 					String map = request.getParameter("map");
+					String mapCenter = request.getParameter("mapCenter");
 					String datetime= request.getParameter("datetime");
-					String sql = "INSERT INTO tbl_board (organizer, title, contents, category, distance, addr, map, datetime) VALUES ('"+organizer+"', '"+title+"', '"+contents+"', '"+boardCategory+"', "+distance+", '"+addr+"', '"+map+"', STR_TO_DATE('"+datetime+"', '%Y-%m-%d %H:%i'))";
+					String sql = "INSERT INTO tbl_board (organizer, title, contents, category, distance, addr, map, mapCenter, datetime) VALUES ('"+organizer+"', '"+title+"', '"+contents+"', '"+boardCategory+"', "+distance+", '"+addr+"', '"+map+"','"+mapCenter+"', STR_TO_DATE('"+datetime+"', '%Y-%m-%d %H:%i'))";
 					System.out.println(sql);
 
 					boardDAO.updateBoard(sql);

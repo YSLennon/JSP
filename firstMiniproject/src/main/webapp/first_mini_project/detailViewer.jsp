@@ -50,7 +50,6 @@
 	 			success : function(response) {
 	 				
 					 
-	 				console.log(response);
 	 				
 					appendList(response.boardList[0], response.boardList.length, response.uidList);
 
@@ -73,9 +72,9 @@
 							})	
 						}
 					}
-					
+
 					//TODO map 데이터 로드해오기
-					fnLoadMap(JSON.parse(response.boardList[0].map));
+					fnLoadMap(JSON.parse(response.boardList[0].map), JSON.parse(response.boardList[0].mapCenter));
 				},
 	 			error : function(xhr, status, error) {
 	 				console.error("AJAX Error - Status: " + status
@@ -87,7 +86,6 @@
 	}
 
 		function appendList(item, cnt, memberList){
-			console.log(item);
 		var container = document.getElementById("detVwContainer");
 		var members = '참여인원: ';
 		memberList.forEach(member => {
@@ -223,13 +221,13 @@
 	
 	var overlays = []; // 지도에 그려진 도형을 담을 배열
  	
-	function fnLoadMap(data){
+	function fnLoadMap(data, mapCenter){
+
  		var mapContainer = document.getElementById('map'),
 	    mapOptions = { 
-	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-	        level: 3 // 지도의 확대 레벨
+	        center: new kakao.maps.LatLng(mapCenter.Ma, mapCenter.La), // 지도의 중심좌표
+	        level: 6 // 지도의 확대 레벨
 	    };
-
 		// 지도 div와 지도 옵션으로 지도를 생성합니다
 		var map = new kakao.maps.Map(mapContainer, mapOptions);
 		getDataFromDrawingMap(data, map); 
